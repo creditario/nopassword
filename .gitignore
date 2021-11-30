@@ -1,11 +1,22 @@
-/.bundle/
-/doc/
-/log/*.log
-/pkg/
-/tmp/
-/test/dummy/db/*.sqlite3
-/test/dummy/db/*.sqlite3-*
-/test/dummy/log/*.log
-/test/dummy/storage/
-/test/dummy/tmp/
+# Ignore bundler config.
+.bundle/
+
+# Ignore all logfiles and tempfiles.
+doc/
+log/*.log
+pkg/
+tmp/*/*/*
+
+# Ignore dummy files.
+test/dummy/db/*.sqlite3
+test/dummy/db/*.sqlite3-*
+test/dummy/log/*.log
+test/dummy/storage/
+test/dummy/tmp/
+test/dummy/.byebug_history
+
+# Ignore Node Modules
+node_modules/
+
+.DS_Store
 .byebug_history
