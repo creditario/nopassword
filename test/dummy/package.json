@@ -16,7 +16,7 @@
     "tailwindcss": "^2.2.19"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build": "node esbuild.config.js",
     "build:css": "postcss ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css"
   }
 }
