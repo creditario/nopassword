@@ -68,11 +68,15 @@ GEM
     builder (3.2.4)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    cssbundling-rails (0.2.6)
+      railties (>= 6.0.0)
     erubi (1.10.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    jsbundling-rails (0.2.1)
+      railties (>= 6.0.0)
     loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -128,6 +132,8 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
     thor (1.1.0)
+    turbo-rails (0.9.0)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     websocket-driver (0.7.5)
@@ -139,9 +145,12 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
+  cssbundling-rails
+  jsbundling-rails
   no_password!
   puma
   sqlite3
+  turbo-rails
 
 BUNDLED WITH
    2.2.27

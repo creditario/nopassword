@@ -7,6 +7,10 @@ gemspec
 # To use puma
 gem "puma"
 
+gem "jsbundling-rails"
+gem "cssbundling-rails"
+gem "turbo-rails"
+
 group :development do
   gem 'sqlite3'
 end
