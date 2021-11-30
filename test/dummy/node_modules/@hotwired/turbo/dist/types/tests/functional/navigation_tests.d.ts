@@ -1,0 +1,38 @@
+import { TurboDriveTestCase } from "../helpers/turbo_drive_test_case";
+export declare class NavigationTests extends TurboDriveTestCase {
+    setup(): Promise<void>;
+    "test navigating renders a progress bar"(): Promise<void>;
+    "test navigating does not render a progress bar before expiring the delay"(): Promise<void>;
+    "test after loading the page"(): Promise<void>;
+    "test following a same-origin unannotated link"(): Promise<void>;
+    "test following a same-origin unannotated custom element link"(): Promise<void>;
+    "test following a same-origin unannotated link with search params"(): Promise<void>;
+    "test following a same-origin unannotated form[method=GET]"(): Promise<void>;
+    "test following a same-origin data-turbo-action=replace link"(): Promise<void>;
+    "test following a same-origin GET form[data-turbo-action=replace]"(): Promise<void>;
+    "test following a same-origin GET form button[data-turbo-action=replace]"(): Promise<void>;
+    "test following a same-origin POST form[data-turbo-action=replace]"(): Promise<void>;
+    "test following a same-origin POST form button[data-turbo-action=replace]"(): Promise<void>;
+    "test following a same-origin data-turbo=false link"(): Promise<void>;
+    "test following a same-origin unannotated link inside a data-turbo=false container"(): Promise<void>;
+    "test following a same-origin data-turbo=true link inside a data-turbo=false container"(): Promise<void>;
+    "test following a same-origin anchored link"(): Promise<void>;
+    "test following a same-origin link to a named anchor"(): Promise<void>;
+    "test following a cross-origin unannotated link"(): Promise<void>;
+    "test following a same-origin [target] link"(): Promise<void>;
+    "test following a same-origin [download] link"(): Promise<void>;
+    "test following a same-origin link inside an SVG element"(): Promise<void>;
+    "test following a cross-origin link inside an SVG element"(): Promise<void>;
+    "test clicking the back button"(): Promise<void>;
+    "test clicking the forward button"(): Promise<void>;
+    "test link targeting a disabled turbo-frame navigates the page"(): Promise<void>;
+    "test skip link with hash-only path scrolls to the anchor without a visit"(): Promise<void>;
+    "test skip link with hash-only path moves focus and changes tab order"(): Promise<void>;
+    "test same-page anchored replace link assumes the intention was a refresh"(): Promise<void>;
+    "test navigating back to anchored URL"(): Promise<void>;
+    "test following a redirection"(): Promise<void>;
+    "test clicking the back button after redirection"(): Promise<void>;
+    "test same-page anchor visits do not trigger visit events"(): Promise<void>;
+    "test correct referrer header"(): Promise<void>;
+    "test double-clicking on a link"(): Promise<void>;
+}

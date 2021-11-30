@@ -1,0 +1,1 @@
+{"version":3,"file":"use-resize.d.ts","sourceRoot":"","sources":["../../src/use-resize/use-resize.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,0BAA0B,EAAE,MAAM,qBAAqB,CAAA;AAEhE,MAAM,WAAW,aAAa;IAC5B,OAAO,CAAC,EAAE,OAAO,CAAA;IACjB,aAAa,CAAC,EAAE,OAAO,CAAA;IACvB,WAAW,CAAC,EAAE,OAAO,GAAG,MAAM,CAAA;CAC/B;AAOD,eAAO,MAAM,SAAS,eAAgB,0BAA0B,YAAW,aAAa,sCAwCvF,CAAA"}
