@@ -1,30 +1,12 @@
 const colors = require('tailwindcss/colors');
-const creditarioColors = {
-  creditario: {
-    '50': '#f5f7f8',
-    '100': '#eaeff1',
-    '200': '#cbd8db',
-    '300': '#acc1c6',
-    '400': '#6e929b',
-    '500': '#306370',
-    '600': '#2b5965',
-    '700': '#244a54',
-    '800': '#1d3b43',
-    '900': '#183137'
-  },
-  'creditario-light': {
-    '50': '#fcfdf7',
-    '100': '#f9fbef',
-    '200': '#f0f5d8',
-    '300': '#e7eec1',
-    '400': '#d4e292',
-    '500': '#c2d563',
-    '600': '#afc059',
-    '700': '#92a04a',
-    '800': '#74803b',
-    '900': '#5f6831'
+
+function withOpacityValue(variableName) {
+  return ({opacityValue}) => {
+    opacityValue = opacityValue ?? 1;
+    return `rgba(var(${variableName}), ${opacityValue})`
   }
 };
+
 module.exports = {
   purge: {
     enabled: 'jit',
@@ -37,27 +19,47 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      black: colors.black,
-      white: colors.white,
-      gray: colors.coolGray,
-      red: colors.red,
-      yellow: colors.amber,
-      indigo: colors.indigo,
-      green: colors.emerald,
-      creditario: creditarioColors.creditario,
-      'creditario-light': creditarioColors['creditario-light'],
-    }
-  },
-  variants: {
     extend: {
-      textColor: ['responsive', 'dark', 'group-hover', 'focus-within', 'hover', 'focus', 'active'],
-      backgroundColor: ['responsive', 'dark', 'group-hover', 'focus-within', 'hover', 'focus', 'active', 'disabled'],
+      colors: {
+        sky: colors.sky,
+        cyan: colors.cyan,
+      },
+      textColor: {
+        skin: {
+          inverted: withOpacityValue('--color-inverted'),
+          accented: withOpacityValue('--color-accented'),
+          'accented-hover': withOpacityValue('--color-accented-hover'),
+          base: withOpacityValue('--color-base'),
+          muted: withOpacityValue('--color-muted'),
+          dimmed: withOpacityValue('--color-dimmed'),
+          error: withOpacityValue('--color-error'),
+        }
+      },
+      backgroundColor: {
+        skin: {
+          'button-accented': withOpacityValue('--color-accented'),
+          'button-accented-hover': withOpacityValue('--color-accented-hover'),
+          'button-inverted': withOpacityValue('--color-inverted'),
+          'button-inverted-hover': withOpacityValue('--color-inverted-hover'),
+          muted: withOpacityValue('--color-muted'),
+          dimmed: withOpacityValue('--color-dimmed'),
+          accent: withOpacityValue('--color-accent'),
+        }
+      },
+      ringColor: {
+        skin: {
+          accented: withOpacityValue('--color-border-accented'),
+        }
+      },
+      borderColor: {
+        skin: {
+          base: withOpacityValue('--color-border-base'),
+          accented: withOpacityValue('--color-border-accented'),
+        }
+      }
     },
   },
+  variants: {},
   plugins: [
     require('@tailwindcss/forms')
   ],
