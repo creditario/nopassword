@@ -1,6 +1,30 @@
 @layer base {
-  body {
-    @apply font-sans
-      antialiased;
+  :root {
+    --color-base: 17, 24, 39;
+    --color-accented: 43,89,101;
+    --color-inverted: 255, 255, 255;
+    --color-accented-hover: 29,59,67;
+    --color-muted: 55, 65, 81;
+    --color-dimmed: 75, 85, 99;
+    --color-error: 220, 38, 38;
+
+    --color-border-base: 209, 213, 219;
+    --color-border-accented: 43,89,101;
+  }
+
+  .input {
+    @apply border-skin-base rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-skin-accented focus:border-skin-accented sm:text-sm;
+  }
+
+  .check {
+    @apply border-skin-base h-4 w-4 text-skin-accented focus:ring-skin-accented rounded;
+  }
+
+  .button {
+    @apply inline-flex justify-center py-2 px-4 border border-skin-base rounded-md shadow-sm text-sm font-medium text-skin-muted bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-skin-accented;
+  }
+
+  .button-accented {
+    @apply border-transparent bg-skin-button-accented hover:bg-skin-button-accented-hover text-skin-inverted;
   }
 }
