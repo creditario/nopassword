@@ -97,7 +97,8 @@ jobs:
             ${{ runner.os }}-module-
 
       - name: Yarn install
-        run: yarn install
+        run: |
+          cd test/dummy & yarn install
 
       - name: Run all tests
         env:
