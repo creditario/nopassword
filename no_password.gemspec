@@ -1,13 +1,13 @@
 require_relative "lib/no_password/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "no_password"
-  spec.version     = NoPassword::VERSION
-  spec.authors     = ["Armando Escalier", "Juan Bojorges"]
-  spec.homepage    = "https://creditar.io"
-  spec.summary     = "Summary of NoPassword."
+  spec.name = "no_password"
+  spec.version = NoPassword::VERSION
+  spec.authors = ["Armando Escalier", "Juan Bojorges"]
+  spec.homepage = "https://creditar.io"
+  spec.summary = "Summary of NoPassword."
   spec.description = "Description of NoPassword."
-  spec.license     = "MIT"
+  spec.license = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   spec.add_dependency "rails", "~> 7.0.0.alpha2"
+  spec.add_development_dependency "standard"
+  spec.add_development_dependency "brakeman"
+  spec.add_development_dependency "bundle-audit"
 end
