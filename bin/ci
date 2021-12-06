@@ -5,9 +5,6 @@ set -e
 echo "Running Unit Tests"
 bin/rails test
 
-# echo "Running System Tests"
-# bin/rails test:system
-
 echo "Linting Ruby code with StandardRb."
 echo "It will not autofix issues."
 bundle exec standardrb
