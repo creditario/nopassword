@@ -2,14 +2,13 @@
 
 module NoPassword
   class SessionManager
-
     def create(user_agent, email, remote_addr, return_url = nil)
       expire_unclaimed_session(user_agent, email)
 
       Session.create!(
         user_agent: user_agent,
         email: email,
-        expires_at: Time.zone.now.advance(minutes: 15),
+        expires_at: Time.zone.now + NoPassword.configuration.session_expiration,
         token: generate_friendly_token,
         remote_addr: remote_addr,
         return_url: return_url
