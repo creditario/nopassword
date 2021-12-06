@@ -1,0 +1,37 @@
+# bin/ci
+#!/usr/bin/env bash
+
+set -e
+echo "Running Unit Tests"
+bin/rails test
+
+echo "Linting Ruby code with StandardRb."
+echo "It will not autofix issues."
+bundle exec standardrb
+
+echo "Analyzing code for security vulnerabilities."
+echo "Output will be in tmp/brakeman.html, which"
+echo "can be opened in your browser."
+bundle exec brakeman -q -o tmp/brakeman.html
+
+echo "Analyzing Ruby gems for"
+echo "security vulnerabilities"
+bundle exec bundle audit check --update
+
+echo "Analyzing Node modules"
+echo "for security vulnerabilities"
+
+set +e
+yarn audit --level=moderate
+yarn_exit_code=$?
+set -e
+if [ $yarn_exit_code -lt 4 ]; then
+  echo "Vulnerabilities were found, but only at"
+  echo "informational or low priority level"
+  echo "These do not need to be fixed, but you"
+  echo "should look into it."
+  echo "To see them run 'yarn audit'"
+else
+  exit 1
+fi
+echo "Done"
