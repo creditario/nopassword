@@ -107,4 +107,4 @@ jobs:
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          bin/rails app:db:reset app:test:all
+          bin/rails app:db:reset test
