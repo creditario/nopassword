@@ -4,10 +4,11 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-session_one: {
-  token: "NnqE-5854-NUQC",
-  user_agent: "Chrome/95.0.4214.45",
-  remote_addr: "95.0.4214.45",
-  return_url: "https://www.creditario.io/home",
+session_one:
+  token: "NnqE-5854-NUQC"
+  user_agent: "Chrome/95.0.4214.45"
+  remote_addr: "95.0.4214.45"
+  expires_at: <%= Time.zone.now.advance(minutes: 15) %>
+  return_url: "https://www.creditario.io/home"
   email: "test@example.com"
-}
+
