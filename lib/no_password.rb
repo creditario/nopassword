@@ -11,7 +11,7 @@ module NoPassword
 
     def initialize
       @session_name = "_session"
-      @session_expiration = 15.minutes
+      @session_expiration = 15
       @session_domain = nil
     end
   end
