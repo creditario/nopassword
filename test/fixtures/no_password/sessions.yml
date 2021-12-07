@@ -8,7 +8,6 @@ session_one:
   token: "NnqE-5854-NUQC"
   user_agent: "Chrome/95.0.4214.45"
   remote_addr: "95.0.4214.45"
-  expires_at: <%= Time.zone.now.advance(minutes: 15) %>
+  expires_at: <%= Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration) %>
   return_url: "https://www.creditario.io/home"
   email: "test@example.com"
-
