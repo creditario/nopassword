@@ -1,0 +1,7 @@
+es:
+  no_password:
+    sessions:
+      new:
+        title: "Iniciar sesión"
+        description: "En su correo electrónico va a recibir el código necesario para iniciar sesión."
+        login: "Iniciar Sesión"
