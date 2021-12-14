@@ -3,25 +3,43 @@ require "uri"
 
 module NoPassword
   class SessionsControllerTest < ActionDispatch::IntegrationTest
-    def setup
-      @sample = SessionsController.new
-      @sample.set_request!(ActionDispatch::TestRequest.create({}))
-      @sample.set_response!(SessionsController.make_response!(@sample.request))
+    test "referer_path is nil if HTTP_REFERER is originated from a external url" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/external"}
+
+      assert_nil session[:referrer_path]
     end
 
-    test "it gets passwordless login" do
-      session = no_password_sessions(:session_claimed)
-      
-      post no_password.sessions_path, params: {email: session.email}
+    test "referer_path is nil if HTTP_REFERER is originated from engine's new_session_path" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/p/sessions/new"}
 
-    #   @sample.stub :session, {} do
-    #     URI(@sample.request.referer).path == "/p"
-        
-    #     assert @sample.sign_in(session)
-    #   end
+      assert_nil session[:referrer_path]
+    end
 
-      assert_redirect_to no_password.edit_session_confirmations_path
-      assert_response :success
+    test "referer_path is present if HTTP_REFERER is originated from a internal url" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/p/internal_url"}
+
+      assert session[:referrer_path]
+    end
+
+    test "it creates a session with nil referer_path if HTTP_REFERER is originated from external url" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/external"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+
+      assert_nil NoPassword::Session.last.return_url
+    end
+
+    test "it creates a session with nil referer_path if HTTP_REFERER is originated from engine's new_session_path" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/p/sessions/new"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+
+      assert_nil NoPassword::Session.last.return_url
+    end
+
+    test "it creates a session with referer_path if HTTP_REFERER is originated from an internal url" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/p/internal_url"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+
+      assert NoPassword::Session.last.return_url
     end
   end
 end
