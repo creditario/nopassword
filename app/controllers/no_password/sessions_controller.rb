@@ -1,49 +1,32 @@
 # frozen_string_literal: true
 
-require "uri"
-
 module NoPassword
   class SessionsController < ApplicationController
-    before_action :setup_referrer_path, only: [:new]
-
     def new
+      session[:referrer_path] = referrer_path
+
       @resource = Session.new
     end
 
     def create
-      user_agent = request.user_agent
-      email = params.dig(:session, :email)
-      remote_addr = request.remote_ip
-      return_url = session[:referrer_path]
-
-      session = SessionManager.new
-
-      session.create(user_agent, email, remote_addr, return_url)
+      SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
     end
 
     private
 
-    def setup_referrer_path
-      session[:referrer_path] = validate_referrer_path
+    def referrer_path
+      return nil unless request.referer.present?
+
+      return_path = request.referer
+      self_path?(return_path) || external_path?(return_path) ? nil : return_path
     end
 
-    def validate_referrer_path
-      referrer_path = URI(request.referer).path if request.referer.present?
-      return nil unless referrer_path
-
-      if self_path?(referrer_path) || external_path?(referrer_path)
-        nil
-      else
-        referrer_path
-      end
+    def self_path?(return_path)
+      URI(return_path).path == no_password.new_session_path
     end
 
-    def self_path?(referrer_path)
-      referrer_path == no_password.new_session_path
-    end
-
-    def external_path?(referrer_path)
-      referrer_path[1] != "p"
+    def external_path?(return_path)
+      URI(return_path).host != request.host
     end
   end
 end
