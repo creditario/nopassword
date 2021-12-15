@@ -1,3 +1,3 @@
 NoPassword::Engine.routes.draw do
-  resources :sessions
+  resources :sessions, only: [:new, :create]
 end

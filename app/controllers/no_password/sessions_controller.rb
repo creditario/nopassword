@@ -15,18 +15,10 @@ module NoPassword
     private
 
     def referrer_path
-      return nil unless request.referer.present?
+      return nil if request.referer.blank?
 
-      return_path = request.referer
-      self_path?(return_path) || external_path?(return_path) ? nil : return_path
-    end
-
-    def self_path?(return_path)
-      URI(return_path).path == no_password.new_session_path
-    end
-
-    def external_path?(return_path)
-      URI(return_path).host != request.host
+      return_path = URI(request.referrer).path
+      return_path == no_password.new_session_path ? nil : return_path
     end
   end
 end

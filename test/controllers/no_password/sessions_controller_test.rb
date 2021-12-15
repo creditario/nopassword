@@ -2,12 +2,6 @@ require "test_helper"
 
 module NoPassword
   class SessionsControllerTest < ActionDispatch::IntegrationTest
-    test "referer_path is nil if HTTP_REFERER is originated from a external url" do
-      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/external"}
-
-      assert_nil session[:referrer_path]
-    end
-
     test "referer_path is nil if HTTP_REFERER is originated from engine's new_session_path" do
       get no_password.new_session_path, headers: {"HTTP_REFERER" => no_password.new_session_url}
 
@@ -18,13 +12,6 @@ module NoPassword
       get no_password.new_session_path, headers: {"HTTP_REFERER" => no_password.sessions_url}
 
       assert session[:referrer_path]
-    end
-
-    test "it creates a session with nil referer_path if HTTP_REFERER is originated from external url" do
-      get no_password.new_session_path, headers: {"HTTP_REFERER" => "http://test.com/external"}
-      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
-
-      assert_nil NoPassword::Session.last.return_url
     end
 
     test "it creates a session with nil referer_path if HTTP_REFERER is originated from engine's new_session_path" do
