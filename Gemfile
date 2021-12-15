@@ -13,5 +13,6 @@ gem "turbo-rails"
 
 gem "pg"
 
+gem "sprockets-rails"
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
