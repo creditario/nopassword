@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "standard"
   spec.add_development_dependency "brakeman"
   spec.add_development_dependency "bundle-audit"
+  spec.add_development_dependency "sprockets-rails"
 end
