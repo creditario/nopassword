@@ -50,15 +50,14 @@ jobs:
 
       - name: List all changed files
         run: |
-          echo "$steps.changed-files.outputs.all_changed_files"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
           
       - name: Find files
         shell: bash
         run: echo "CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRDT ${{ env.HEAD }} ${{ env.BASE }} | grep '\.rb$' | xargs)" >> $GITHUB_ENV
 
       - name: Standardrb linter
-        if: ${{env.CHANGED_FILES != '' }}
-        run: bundle exec standardrb ${{env.CHANGED_FILES}}
+        run: bundle exec standardrb
 
       - name: Brakeman
         run: bundle exec brakeman --no-summary
