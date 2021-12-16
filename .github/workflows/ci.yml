@@ -40,7 +40,17 @@ jobs:
           ruby-version: ${{env.RUBY_VERSION}}
           bundler-cache: true
           cache-version: 1
+          
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v12
 
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+          
       - name: Find files
         shell: bash
         run: echo "CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRDT ${{ env.HEAD }} ${{ env.BASE }} | grep '\.rb$' | xargs)" >> $GITHUB_ENV
