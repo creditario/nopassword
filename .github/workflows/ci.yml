@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 3
+          fetch-depth: 6
 
       - name: Get base (merge)
         if: github.event_name != 'pull_request'
