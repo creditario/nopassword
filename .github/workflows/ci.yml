@@ -95,6 +95,10 @@ jobs:
         run: |
           cd test/dummy & yarn install
 
+      - name: Precompile assets
+        run: |
+          cd  test/dummy && bin/rails assets:precompile
+
       - name: Run all tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/nopassword_test
@@ -102,5 +106,4 @@ jobs:
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          cd  test/dummy && bin/rails assets:precompile
           bin/rails app:db:reset test
