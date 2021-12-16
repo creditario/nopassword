@@ -57,7 +57,7 @@ jobs:
         run: echo "CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRDT ${{ env.HEAD }} ${{ env.BASE }} | grep '\.rb$' | xargs)" >> $GITHUB_ENV
 
       - name: Standardrb linter
-        run: bundle exec standardrb
+        run: bundle exec standardrb app/**/*.rb
 
       - name: Brakeman
         run: bundle exec brakeman --no-summary
