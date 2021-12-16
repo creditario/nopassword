@@ -41,23 +41,8 @@ jobs:
           bundler-cache: true
           cache-version: 1
           
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v12
-        with:
-          files: |
-            \.rb$
-
-      - name: List all changed files
-        run: |
-          echo "${{ steps.changed-files.outputs.all_changed_files }}"
-          
-      - name: Find files
-        shell: bash
-        run: echo "CHANGED_FILES=$(git diff --name-only --diff-filter=ACMRDT ${{ env.HEAD }} ${{ env.BASE }} | grep '\.rb$' | xargs)" >> $GITHUB_ENV
-
       - name: Standardrb linter
-        run: bundle exec standardrb app/**/*.rb
+        run: bundle exec standardrb app/**/*.rb lib/**/*.rb
 
       - name: Brakeman
         run: bundle exec brakeman --no-summary
