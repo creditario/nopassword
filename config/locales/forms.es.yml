@@ -1,0 +1,6 @@
+es:
+  form:
+    placeholders:
+      email: "ana@company.com"
+    submit:
+      login: "Iniciar Sesión"
