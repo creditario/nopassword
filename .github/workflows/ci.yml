@@ -102,4 +102,5 @@ jobs:
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          bin/rails app:assets:precompile app:db:reset test
+          cd  test/dummy && bin/rails assets:precompile
+          bin/rails app:db:reset test
