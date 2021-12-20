@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+  <!--[if mso]>
+    <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+    <style>
+      td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
+    </style>
+  <![endif]-->
+  <title>
+    <%= @title %>
+  </title>
+  <style>
+    .hover-bg-creditario-600:hover {
+      background-color: #244a54 !important;
+    }
+
+    .hover-underline:hover {
+      text-decoration: underline !important;
+    }
+
+    @media (max-width: 600px) {
+      .sm-h-32 {
+        height: 32px !important;
+      }
+
+      .sm-w-full {
+        width: 100% !important;
+      }
+
+      .sm-px-24 {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+      }
+
+      .sm-pb-12 {
+        padding-bottom: 12px !important;
+      }
+    }
+  </style>
+</head>
+
+<body
+  style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; height: 100%; background-color: #f3f4f6;">
+  <div role="article" aria-roledescription="email" aria-label="<%= @title %>" lang="es">
+    <table
+      style="height: 100%; width: 100%; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;"
+      cellpadding="0" cellspacing="0" role="presentation">
+      <tr>
+        <td align="center"
+          style="background-color: #f3f4f6; padding-top: 24px; padding-bottom: 24px; vertical-align: middle;"
+          valign="middle">
+          <table class="sm-w-full" style="width: 600px;" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td class="sm-pb-12" style="padding-bottom: 24px; text-align: center;">
+                <h1 style="font-size: 24px; font-weight: 600; color: #000000;">
+                  <%= @title %>
+                </h1>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" class="sm-px-24">
+                <table class="sm-w-full" style="width: 75%;" cellpadding="0" cellspacing="0" role="presentation">
+                  <tr>
+                    <td class="sm-px-24"
+                      style="background-color: #ffffff; padding: 48px; text-align: center; border-radius: 4px; ">
+                      <%= image_tag asset_url("on-boarding-logo-dos.svg"),
+                        style: "width: 200px;margin-bottom: 24px;" %>
+                        <%= yield %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="height: 2px; background-color: #2b5965;"></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 32px; text-align: center; font-size: 12px; color: #4b5563;">
+                      <%= link_to "https://creditario.io" do %>
+                        <%= image_tag asset_url("creditario.png"),
+                          style: "width: 120px;margin-bottom: 24px;" %>
+                      <% end %>
+                      <p style="margin: 0 0 4px; text-transform: uppercase;">
+                        <%= t(".service") %>
+                          <%= link_to "Creditar.io" , "https://creditar.io" , class: "hover-underline" ,
+                            style: "color: #4b5563; text-decoration: none;" , target: "_blank" %>
+                      </p>
+                      <p style="margin: 0; font-style: italic;">
+                        <%= t(".platform") %>
+                      </p>
+                      <p style="cursor: default;">
+                        <%= link_to "Creditar.io" , "https://creditar.io" , class: "hover-underline" ,
+                          style: "color: #4b5563; text-decoration: none;" %> &bull;
+                        <%= link_to "OnBoarding" , "https://creditar.io" , class: "hover-underline" ,
+                          style: "color: #4b5563; text-decoration: none;" %> &bull;
+                        <%= link_to "Identidad" , "https://creditar.io/identidad" , class: "hover-underline" ,
+                          style: "color: #4b5563; text-decoration: none;" %>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

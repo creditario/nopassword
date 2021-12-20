@@ -10,6 +10,11 @@ module NoPassword
 
     def create
       SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
+
+      # if session.present?
+      #   session.update(token: generate_reset_password_token(session.global_id))
+      #   SessionsMailer.with(host: full_host, session: session).send_token.deliver_now
+      # end
     end
 
     private
