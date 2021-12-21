@@ -1,12 +1,7 @@
-<p style="margin: 0; font-size: 18px; font-weight: 600;"><%= t("mailers.forgot_password.greetings") %></p>
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.forgot_password.instructions_1") %></p>
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.forgot_password.instructions_2a") %></p>
+<p style="margin: 0; font-size: 18px; font-weight: 600;"><%= t("mailers.send_token.greetings") %></p>
+<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_1", href: link_to(t("mailers.send_token.instructions_1a"), no_password.new_session_url(token: CGI.escape(@token)), style:"color: #2b5965" )).html_safe %></p>
+<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_2") %></p><%= @friendly_token %>
 
 <div class="sm-h-32" style="line-height: 24px;">&zwnj;</div>
-<%= link_to edit_passwords_url(token: CGI.escape(@user.reset_password_token), **@url_options),  class: "hover-bg-creditario-600", style: "display: inline-block; border-radius: 4px; background-color: #2b5965; padding: 20px 24px; font-size: 14px; font-weight: 600; text-transform: uppercase; line-height: 1; color: #ffffff; text-decoration: none;" do %>
-  <!--[if mso]><i style="letter-spacing: 24px; mso-font-width: -100%; mso-text-raise: 26pt;">&nbsp;</i><![endif]-->
-  <span style="mso-text-raise: 13pt;"><%= t("mailers.forgot_password.title") %> &rarr;</span>
-  <!--[if mso]><i style="letter-spacing: 24px; mso-font-width: -100%;">&nbsp;</i><![endif]-->
-<% end %>
 
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.forgot_password.instructions_3") %></p>
+<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_3") %></p>

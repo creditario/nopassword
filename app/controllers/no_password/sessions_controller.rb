@@ -2,6 +2,8 @@
 
 module NoPassword
   class SessionsController < ApplicationController
+    include Concerns::SignTokens
+
     def new
       session[:referrer_path] = referrer_path
 
@@ -9,12 +11,15 @@ module NoPassword
     end
 
     def create
-      SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
+      email = params.dig(:session, :email)
+      SessionManager.new.create(request.user_agent, email, request.remote_ip, session[:referrer_path])
 
-      # if session.present?
-      #   session.update(token: generate_reset_password_token(session.global_id))
-      #   SessionsMailer.with(host: full_host, session: session).send_token.deliver_now
-      # end
+      session = NoPassword::Session.find_by(email: email)
+
+      if session.present?
+        session.update(token: sign_token(session.token))
+        SessionsMailer.with(session: session).send_token.deliver_now
+      end
     end
 
     private

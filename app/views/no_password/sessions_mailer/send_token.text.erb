@@ -1,0 +1,5 @@
+<%= t("mailers.send_token.greetings") %>
+
+<%= t("mailers.send_token.instructions_1") %><%= t("mailers.send_token.instructions_1", href: link_to(t("mailers.send_token.instructions_1a"), no_password.new_session_url(token: CGI.escape(@token)))) %></p>
+<%= t("mailers.send_token.instructions_2") %><%= @friendly_token %>
+<%= t("mailers.send_token.instructions_3") %>

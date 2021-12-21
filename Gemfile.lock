@@ -66,6 +66,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     brakeman (5.1.2)
     builder (3.2.4)
@@ -85,6 +87,10 @@ GEM
       concurrent-ruby (~> 1.0)
     jsbundling-rails (1.0.0)
       railties (>= 6.0.0)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
     loofah (2.13.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -105,6 +111,7 @@ GEM
     parser (3.0.3.2)
       ast (~> 2.4.1)
     pg (1.2.3)
+    public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -188,6 +195,7 @@ DEPENDENCIES
   bundle-audit
   cssbundling-rails
   jsbundling-rails
+  letter_opener
   no_password!
   pg
   puma
