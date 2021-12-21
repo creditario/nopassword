@@ -5,7 +5,7 @@ require "active_support/concern"
 
 module NoPassword
   module Concerns
-    module SignTokens
+    module WebTokens
       extend ActiveSupport::Concern
 
       @token_expiration = Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration)
@@ -15,7 +15,7 @@ module NoPassword
           generate_token(data, expires_in: expires_in, purpose: :no_password_login)
         end
 
-        def verify_signed_token(data)
+        def verify_token(data)
           verify_url_token(data, purpose: :no_password_login)
         end
 

@@ -2,7 +2,7 @@
 
 module NoPassword
   class SessionsController < ApplicationController
-    include Concerns::SignTokens
+    include Concerns::WebTokens
 
     def new
       session[:referrer_path] = referrer_path
