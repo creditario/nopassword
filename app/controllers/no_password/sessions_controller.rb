@@ -11,14 +11,10 @@ module NoPassword
     end
 
     def create
-      email = params.dig(:session, :email)
-      SessionManager.new.create(request.user_agent, email, request.remote_ip, session[:referrer_path])
+      current_session = SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
 
-      session = NoPassword::Session.find_by(email: email)
-
-      if session.present?
-        session.update(token: sign_token(session.token))
-        SessionsMailer.with(session: session).send_token.deliver_now
+      if current_session.present?
+        SessionsMailer.with(session: current_session).send_token.deliver_now
       end
     end
 
