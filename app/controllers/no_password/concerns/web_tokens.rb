@@ -9,10 +9,10 @@ module NoPassword
       extend ActiveSupport::Concern
 
       included do
-        def sign_token(data, expires_in: NoPassword.configuration.session_expiration)
+        def sign_token(data)
           secret_key = NoPassword.configuration.secret_key || Rails.application.secret_key_base
           verifier = ActiveSupport::MessageVerifier.new(secret_key)
-          verifier.generate(data, expires_in: expires_in, purpose: :no_password_login)
+          verifier.generate(data, expires_in: NoPassword.configuration.session_expiration, purpose: :no_password_login)
         end
 
         def verify_token(data)
