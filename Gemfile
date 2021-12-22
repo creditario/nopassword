@@ -16,3 +16,5 @@ gem "pg"
 gem "sprockets-rails"
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+gem "letter_opener", group: :development

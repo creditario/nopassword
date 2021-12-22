@@ -2,6 +2,8 @@
 
 module NoPassword
   class SessionsController < ApplicationController
+    include Concerns::WebTokens
+
     def new
       session[:referrer_path] = referrer_path
 
@@ -9,7 +11,11 @@ module NoPassword
     end
 
     def create
-      SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
+      current_session = SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
+
+      if current_session.present?
+        SessionsMailer.with(session: current_session).send_token.deliver_now
+      end
     end
 
     private

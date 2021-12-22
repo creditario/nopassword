@@ -1,0 +1,18 @@
+es:
+  layouts:
+      mailer:
+        service: Servicio de
+        platform: La plataforma de core bancario sobra la cual ejecutar tu negocio financiero.
+        from: no-reply@creditar.io
+
+  mailers:
+    default_from: no-reply@creditar.io
+
+    send_token:
+      subject: "Su código de sesión temporal está aquí."
+      greetings: "Iniciar sesión."
+      instructions_1: "Utilice esta liga para %{href}"
+      instructions_1a: "iniciar sesión"
+      instructions_2: "O utilice el código "
+      instructions_3: "Si usted no solicitó este correo, por favor haga caso omiso de él 
+      y eliminelo. No lo reenvie o comparta con otras personas."
