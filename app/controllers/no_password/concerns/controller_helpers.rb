@@ -19,7 +19,7 @@ module NoPassword
         end
 
         def sign_in(session_model, key = nil, data = nil)
-          if session_model.claimed? && session_model.expired?
+          if session_model.claimed? && !session_model.expired?
             session[session_key] = session_model.id
 
             if key.present? && data.present?
