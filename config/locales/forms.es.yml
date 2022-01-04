@@ -2,5 +2,6 @@ es:
   form:
     placeholders:
       email: "ana@company.com"
+      token: "4646-39103-0867"
     submit:
       login: "Iniciar Sesión"

@@ -10,6 +10,11 @@ function withOpacityValue(variableName) {
 module.exports = {
   purge: {
     enabled: 'jit',
+    options: {
+      safelist: [
+        'type',
+      ],
+    },
     content: [
       './app/views/**/*.html.erb',
       './app/helpers/**/*.rb',

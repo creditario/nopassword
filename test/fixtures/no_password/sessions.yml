@@ -9,7 +9,7 @@ session_one:
   user_agent: "Chrome/95.0.4214.45"
   remote_addr: "95.0.4214.45"
   expires_at: <%= Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration) %>
-  return_url: "https://www.creditario.io/home"
+  return_url: "http://www.example.com/home"
   email: "test@example.com"
 
 session_claimed:
@@ -18,5 +18,5 @@ session_claimed:
   remote_addr: "185.0.4214.45"
   expires_at: <%= Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration) %>
   claimed_at: <%= Time.zone.now %>
-  return_url: "https://www.creditario.io/home"
+  return_url: "http://www.example.com/home"
   email: "test@example.com"
