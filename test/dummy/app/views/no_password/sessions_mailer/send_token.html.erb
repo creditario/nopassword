@@ -1,7 +1,0 @@
-<p style="margin: 0; font-size: 18px; font-weight: 600;"><%= t("mailers.send_token.greetings") %></p>
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_1", href: link_to(t("mailers.send_token.instructions_1a"), no_password.session_confirmation_url(token: @signed_token), style:"color: #2b5965" )).html_safe %></p>
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_2") %></p><%= @friendly_token %>
-
-<div class="sm-h-32" style="line-height: 24px;">&zwnj;</div>
-
-<p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_3") %></p>

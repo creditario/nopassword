@@ -1,6 +1,5 @@
 module NoPassword
   class ApplicationMailer < ActionMailer::Base
-    default from: "from@example.com"
-    layout "mailer"
+    layout "no_password_mailer"
   end
 end
