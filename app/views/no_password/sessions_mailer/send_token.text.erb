@@ -1,5 +1,5 @@
 <%= t("mailers.send_token.greetings") %>
 
-<%= t("mailers.send_token.instructions_1") %><%= t("mailers.send_token.instructions_1", href: link_to(t("mailers.send_token.instructions_1a"), no_password.session_confirmation_url(token: @signed_token))) %></p>
+<%= t("mailers.send_token.instructions_1_text") %> <%= no_password.session_confirmation_url(token: @signed_token)%>
 <%= t("mailers.send_token.instructions_2") %><%= @friendly_token %>
 <%= t("mailers.send_token.instructions_3") %>

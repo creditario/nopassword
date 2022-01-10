@@ -1,8 +1,9 @@
 es:
   layouts:
-      mailer:
+      no_password_mailer:
         service: Servicio de
-        platform: La plataforma de core bancario sobra la cual ejecutar tu negocio financiero.
+        platform: La plataforma de core bancario sobre la cual ejecutar tu negocio financiero.
+      mailer:
         from: no-reply@creditar.io
 
   mailers:
@@ -13,6 +14,7 @@ es:
       greetings: "Iniciar sesión."
       instructions_1: "Utilice esta liga para %{href}"
       instructions_1a: "iniciar sesión"
+      instructions_1_text: "Utilice esta liga para iniciar sesión"
       instructions_2: "O utilice el código "
       instructions_3: "Si usted no solicitó este correo, por favor haga caso omiso de él 
       y eliminelo. No lo reenvie o comparta con otras personas."

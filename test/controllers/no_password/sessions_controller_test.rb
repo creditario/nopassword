@@ -27,5 +27,12 @@ module NoPassword
 
       assert NoPassword::Session.last.return_url
     end
+
+    test "it redirects to redirect_to no_password.edit_session_confirmations_path if current_session.present?" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => no_password.sessions_url}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+
+      assert_redirected_to no_password.edit_session_confirmations_path
+    end
   end
 end
