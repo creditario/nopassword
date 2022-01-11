@@ -5,3 +5,9 @@ es:
         title: "Iniciar sesión"
         description: "En su correo electrónico va a recibir el código necesario para iniciar sesión."
         login: "Iniciar Sesión"
+
+    session_confirmations:
+      edit:
+        title: "Iniciar sesión"
+        description: "Utilice el código o la URL que recibió en su correo. Si no lo encuentra, búsquelo en la bandeja de Spam."
+        submit: "Iniciar sesión"

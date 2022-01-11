@@ -1,5 +1,3 @@
-const colors = require('tailwindcss/colors');
-
 function withOpacityValue(variableName) {
   return ({opacityValue}) => {
     opacityValue = opacityValue ?? 1;
@@ -8,22 +6,12 @@ function withOpacityValue(variableName) {
 };
 
 module.exports = {
-  purge: {
-    enabled: 'jit',
-    content: [
-      './app/views/**/*.html.erb',
-      './app/helpers/**/*.rb',
-      './app/controllers/**/*.rb',
-      './app/javascript/**/*.js',
-    ]
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    './app/**/*.{erb,rb,js}',
+    '../../app/**/*.{erb,rb,js}',
+  ],
   theme: {
     extend: {
-      colors: {
-        sky: colors.sky,
-        cyan: colors.cyan,
-      },
       textColor: {
         skin: {
           inverted: withOpacityValue('--color-inverted'),
@@ -59,7 +47,6 @@ module.exports = {
       }
     },
   },
-  variants: {},
   plugins: [
     require('@tailwindcss/forms')
   ],
