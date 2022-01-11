@@ -48,15 +48,17 @@ module NoPassword
       assert_redirected_to main_app_root_path
     end
 
-    test "it redirects to new_session_path if token is already claimed" do
+    test "it flashes an error notification if token is already claimed" do
       session = no_password_sessions(:session_claimed)
 
       patch no_password.session_confirmations_path(token: session.token)
 
-      assert_redirected_to no_password.new_session_path
+      assert_turbo_stream status: :unprocessable_entity, action: :update, target: "notifications" do |frame|
+        assert_match flash.alert[:description], frame.children.to_html
+      end
     end
 
-    test "it redirects to new_session_path if token is already expired" do
+    test "it flashes an error notification if token is already expired" do
       session = no_password_sessions(:session_one)
       passed_minutes = NoPassword.configuration.session_expiration + 10
 
@@ -64,10 +66,12 @@ module NoPassword
         patch no_password.session_confirmations_path(token: session.token)
       end
 
-      assert_redirected_to no_password.new_session_path
+      assert_turbo_stream status: :unprocessable_entity, action: :update, target: "notifications" do |frame|
+        assert_match flash.alert[:description], frame.children.to_html
+      end
     end
 
-    test "it shows error notification if token is invalid" do
+    test "it shows error notification if token doesn't exist" do
       patch no_password.session_confirmations_path(token: "invalid_token"), as: :turbo_stream
 
       assert_turbo_stream status: :unprocessable_entity, action: :update, target: "notifications" do |frame|

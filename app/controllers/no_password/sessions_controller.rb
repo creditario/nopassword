@@ -25,7 +25,7 @@ module NoPassword
       return nil if request.referer.blank?
 
       return_path = URI(request.referrer).path
-      return_path == no_password.new_session_path ? nil : return_path
+      return_path == no_password.new_session_path || return_path == no_password.edit_session_confirmations_path ? nil : return_path
     end
   end
 end

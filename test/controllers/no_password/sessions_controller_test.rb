@@ -21,6 +21,13 @@ module NoPassword
       assert_nil NoPassword::Session.last.return_url
     end
 
+    test "it creates a session with nil referer_path if HTTP_REFERER is originated from engine's edit_session_confirmations_path" do
+      get no_password.new_session_path, headers: {"HTTP_REFERER" => no_password.edit_session_confirmations_path}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+
+      assert_nil NoPassword::Session.last.return_url
+    end
+
     test "it creates a session with referer_path if HTTP_REFERER is originated from an internal url" do
       get no_password.new_session_path, headers: {"HTTP_REFERER" => no_password.sessions_url}
       post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
