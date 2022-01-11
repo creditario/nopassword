@@ -8,7 +8,7 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <%= form_with model: @resource, local: true, url: no_password.session_confirmations_path, method: "patch", class: "space-y-6" do |form| %>
+        <%= form_with url: no_password.session_confirmations_path, method: "patch", class: "space-y-6" do |form| %>
           <p class="text-skin-muted px-4 text-center">
             <%= t("no_password.session_confirmations.edit.description") %>
           </p>
@@ -20,6 +20,9 @@
           </div>
           <div>
             <%= form.submit t("form.submit.login"), class: "w-full flex button button-accented" %>
+          </div>
+          <div>
+            <%= link_to "Solicitar nuevo código", no_password.new_session_path, class: "w-full block text-center text-skin-accented hover:text-skin-accented-hover" %>
           </div>
         <% end %>
       </div>

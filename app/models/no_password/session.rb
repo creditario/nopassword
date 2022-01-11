@@ -13,5 +13,9 @@ module NoPassword
 
       expires_at < current_time
     end
+
+    def invalid?
+      claimed? || expired?
+    end
   end
 end

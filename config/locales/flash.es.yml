@@ -3,5 +3,5 @@ es:
     update:
       invalid_code:
         alert:
-          title: Operación inválida
-          description: El código no es válido
+          title: No es posible iniciar sesión
+          description: El código no es válido o ya expiró. Solicite uno nuevo.
