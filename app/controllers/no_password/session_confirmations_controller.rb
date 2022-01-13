@@ -26,8 +26,8 @@ module NoPassword
     private
 
     def sign_in_session(session)
-      SessionManager.new.claim(session.token, session.email)
-      sign_in(session)
+      claimed_session = SessionManager.new.claim(session.token, session.email)
+      sign_in(claimed_session)
 
       redirect_to session.return_url || main_app.root_path
     end
