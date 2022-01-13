@@ -44,17 +44,6 @@ module NoPassword
         assert @sample.signed_in_session?
       end
     end
-
-    test "checks if a sign_out is successful" do
-      session = no_password_sessions(:session_claimed)
-
-      @sample.stub :session, {} do
-        @sample.sign_in(session)
-
-        assert @sample.sign_out
-        refute @sample.signed_in_session?
-      end
-    end
   end
 
   # Controlador para pruebas del Concern ControllerHelpers
