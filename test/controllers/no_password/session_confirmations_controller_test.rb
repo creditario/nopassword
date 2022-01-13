@@ -13,6 +13,13 @@ module NoPassword
       assert_redirected_to session.return_url
     end
 
+    test "it checks if session gets claimed" do
+      session = no_password_sessions(:session_one)
+      claimed_session = SessionManager.new.claim(session.token, session.email)
+
+      assert claimed_session.claimed?
+    end
+
     test "it shows error notification if token is invalid after using magic link" do
       get no_password.session_confirmation_path(token: "invalid_token")
 
