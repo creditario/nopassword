@@ -29,14 +29,7 @@ module NoPassword
           end
         end
 
-        def sign_out(key = nil)
-          session.delete(session_key)
-          session.delete(session_key(key)) if key.present?
-          @session = nil
-          true
-        end
-
-        helper_method :current_session, :signed_in_session?, :sign_in, :sign_out
+        helper_method :current_session, :signed_in_session?, :sign_in
 
         protected
 

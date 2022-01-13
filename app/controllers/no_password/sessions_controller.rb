@@ -2,7 +2,7 @@
 
 module NoPassword
   class SessionsController < ApplicationController
-    include Concerns::WebTokens
+    include Concerns::ControllerHelpers
 
     def new
       session[:referrer_path] = referrer_path
@@ -17,6 +17,18 @@ module NoPassword
         SessionsMailer.with(session: current_session).send_token.deliver_now
         redirect_to no_password.edit_session_confirmations_path
       end
+    end
+
+    def destroy
+      sign_out
+      redirect_to main_app.root_path
+    end
+
+    def sign_out(key = nil)
+      session.delete(session_key)
+      session.delete(session_key(key)) if key.present?
+      @session = nil
+      true
     end
 
     private
