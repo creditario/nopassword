@@ -24,13 +24,6 @@ module NoPassword
       redirect_to main_app.root_path
     end
 
-    def sign_out(key = nil)
-      session.delete(session_key)
-      session.delete(session_key(key)) if key.present?
-      @session = nil
-      true
-    end
-
     private
 
     def referrer_path
@@ -38,6 +31,13 @@ module NoPassword
 
       return_path = URI(request.referrer).path
       return_path == no_password.new_session_path || return_path == no_password.edit_session_confirmations_path ? nil : return_path
+    end
+
+    def sign_out(key = nil)
+      session.delete(session_key)
+      session.delete(session_key(key)) if key.present?
+      @session = nil
+      true
     end
   end
 end
