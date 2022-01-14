@@ -4,6 +4,10 @@ module NoPassword
   class SessionConfirmationsControllerTest < ActionDispatch::IntegrationTest
     include Concerns::WebTokens
 
+    def setup
+      @main_app_root_path = main_app.root_path
+    end
+
     test "it redirects to return_url if token is valid after using magic link" do
       session = no_password_sessions(:session_one)
       signed_token = token_to_url(sign_token(session.token))
@@ -30,11 +34,9 @@ module NoPassword
       session = no_password_sessions(:session_one)
       session.update(return_url: nil)
       signed_token = token_to_url(sign_token(session.token))
-      main_app_root_path = main_app.root_path
-
       get no_password.session_confirmation_path(token: signed_token)
 
-      assert_redirected_to main_app_root_path
+      assert_redirected_to @main_app_root_path
     end
 
     test "it redirects to return_url if token is valid after using friendly token" do
@@ -48,11 +50,10 @@ module NoPassword
     test "it redirects to root if token is valid after using friendly token" do
       session = no_password_sessions(:session_one)
       session.update(return_url: nil)
-      main_app_root_path = main_app.root_path
 
       patch no_password.session_confirmations_path(token: session.token)
 
-      assert_redirected_to main_app_root_path
+      assert_redirected_to @main_app_root_path
     end
 
     test "it flashes an error notification if token is already claimed" do
@@ -81,6 +82,24 @@ module NoPassword
     test "it shows error notification if token doesn't exist" do
       patch no_password.session_confirmations_path(token: "invalid_token"), as: :turbo_stream
 
+      assert_turbo_stream status: :unprocessable_entity, action: :update, target: "notifications" do |frame|
+        assert_match flash.alert[:description], frame.children.to_html
+      end
+    end
+
+    test "it checks if sign in is successful" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
+
+      assert_equal request.session["—-no_password_session_id"], NoPassword::Session.last.id
+      assert_redirected_to @main_app_root_path
+    end
+
+    test "it checks if it fails to sign in" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: "Invalid-Token")
+
+      assert_nil request.session["—-no_password_session_id"]
       assert_turbo_stream status: :unprocessable_entity, action: :update, target: "notifications" do |frame|
         assert_match flash.alert[:description], frame.children.to_html
       end
