@@ -1,53 +1,33 @@
 require "test_helper"
-require "minitest/mock"
 
 module NoPassword
   class ControllerHelpersTest < ActionDispatch::IntegrationTest
-    def setup
-      @sample = SampleController.new
-      @sample.set_request!(ActionDispatch::TestRequest.create({}))
-      @sample.set_response!(SampleController.make_response!(@sample.request))
+    test "it checks for current session when logging in" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
+
+      assert @controller.current_session
     end
 
-    test "it checks if signs in successfully" do
-      session = no_password_sessions(:session_claimed)
+    test "it checks if signed_in_session is true when logging in" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
 
-      @sample.stub :session, {} do
-        assert @sample.sign_in(session)
-      end
+      assert @controller.signed_in_session?
     end
 
-    test "it fails to sign in" do
-      session = no_password_sessions(:session_one)
+    test "it checks there is no current session if failed to log in" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: "Invalid-Token")
 
-      @sample.stub :session, {} do
-        assert_nil @sample.sign_in(session)
-      end
+      assert_nil @controller.current_session
     end
 
-    test "checks for current session" do
-      session = no_password_sessions(:session_claimed)
+    test "it checks if signed_in_session is false when failed to log in" do
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+      patch no_password.session_confirmations_path(token: "Invalid-Token")
 
-      @sample.stub :session, {} do
-        new_sign_in = @sample.sign_in(session)
-
-        assert_equal @sample.current_session, new_sign_in
-      end
+      refute @controller.signed_in_session?
     end
-
-    test "checks for signed in session boolean" do
-      session = no_password_sessions(:session_claimed)
-
-      @sample.stub :session, {} do
-        @sample.sign_in(session)
-
-        assert @sample.signed_in_session?
-      end
-    end
-  end
-
-  # Controlador para pruebas del Concern ControllerHelpers
-  class SampleController < ActionController::Base
-    include Concerns::ControllerHelpers
   end
 end

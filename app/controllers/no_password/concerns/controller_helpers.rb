@@ -18,18 +18,7 @@ module NoPassword
           current_session.present?
         end
 
-        def sign_in(session_model, key = nil, data = nil)
-          if session_model.claimed? && !session_model.expired?
-            session[session_key] = session_model.id
-
-            if key.present? && data.present?
-              session[session_key(key)] = data
-            end
-            session_model
-          end
-        end
-
-        helper_method :current_session, :signed_in_session?, :sign_in
+        helper_method :current_session, :signed_in_session?
 
         protected
 
