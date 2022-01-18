@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  include Authenticate
-  before_action :authenticate_session, only: [:show]
+  include NoPassword::Concerns::ControllerHelpers
+  before_action :authenticate_session!, only: [:show]
 
   def index
   end
