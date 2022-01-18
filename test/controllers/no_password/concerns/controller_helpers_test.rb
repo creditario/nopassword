@@ -29,5 +29,12 @@ module NoPassword
 
       refute @controller.signed_in_session?
     end
+
+    test "it checks 'authenticate_session!' functionality, it can't access to main_app.home_path if signed_in_session? is false" do
+      get "/home/1"
+
+      refute @controller.signed_in_session?
+      assert_redirected_to no_password.new_session_path
+    end
   end
 end

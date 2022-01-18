@@ -1,0 +1,8 @@
+es:
+  layouts:
+    header:
+      inactive_session:
+        status: "No active session"
+        button: "Sign in"
+      active_session:
+        button: "Sign out"

@@ -5,3 +5,7 @@ es:
         alert:
           title: No es posible iniciar sesión
           description: El código no es válido o ya expiró. Solicite uno nuevo.
+      session:
+        alert:
+          title: Acceso denegado
+          description: Debes de iniciar sesión primero

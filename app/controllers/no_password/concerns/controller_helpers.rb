@@ -18,6 +18,13 @@ module NoPassword
           current_session.present?
         end
 
+        def authenticate_session!
+          unless signed_in_session?
+            session[:referrer_path] = request.fullpath
+            redirect_to no_password.new_session_path, alert: t("flash.update.session.alert")
+          end
+        end
+
         helper_method :current_session, :signed_in_session?
 
         protected
