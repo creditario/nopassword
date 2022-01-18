@@ -43,7 +43,6 @@ module NoPassword
     end
 
     test "it destroys a session and redirects to main_app.root_path" do
-      main_app_root_path = main_app.root_path
       get no_password.new_session_path, headers: {HTTP_REFERER: no_password.new_session_url}
       post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
       patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
@@ -51,7 +50,7 @@ module NoPassword
       delete no_password.session_path(session["—-no_password_session_id"])
 
       assert_nil session["—-no_password_session_id"]
-      assert_redirected_to main_app_root_path
+      assert_redirected_to "/"
     end
   end
 end

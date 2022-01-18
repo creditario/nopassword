@@ -4,10 +4,6 @@ module NoPassword
   class SessionConfirmationsControllerTest < ActionDispatch::IntegrationTest
     include Concerns::WebTokens
 
-    def setup
-      @main_app_root_path = main_app.root_path
-    end
-
     test "it redirects to return_url if token is valid after using magic link" do
       session = no_password_sessions(:session_one)
       signed_token = token_to_url(sign_token(session.token))
@@ -36,7 +32,7 @@ module NoPassword
       signed_token = token_to_url(sign_token(session.token))
       get no_password.session_confirmation_path(token: signed_token)
 
-      assert_redirected_to @main_app_root_path
+      assert_redirected_to "/"
     end
 
     test "it redirects to return_url if token is valid after using friendly token" do
@@ -53,7 +49,7 @@ module NoPassword
 
       patch no_password.session_confirmations_path(token: session.token)
 
-      assert_redirected_to @main_app_root_path
+      assert_redirected_to "/"
     end
 
     test "it flashes an error notification if token is already claimed" do
@@ -92,7 +88,7 @@ module NoPassword
       patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
 
       assert_equal request.session["—-no_password_session_id"], NoPassword::Session.last.id
-      assert_redirected_to @main_app_root_path
+      assert_redirected_to "/"
     end
 
     test "it checks if it fails to sign in" do
