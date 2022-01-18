@@ -1,0 +1,7 @@
+es:
+  flash:
+    update:
+      session:
+        alert:
+          title: Acceso denegado
+          description: Debes de iniciar sesión primero
