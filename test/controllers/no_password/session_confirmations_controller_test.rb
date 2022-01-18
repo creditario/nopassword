@@ -88,7 +88,7 @@ module NoPassword
     end
 
     test "it checks if sign in is successful" do
-      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
       patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
 
       assert_equal request.session["—-no_password_session_id"], NoPassword::Session.last.id
@@ -96,7 +96,7 @@ module NoPassword
     end
 
     test "it checks if it fails to sign in" do
-      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {"HTTP_USER_AGENT" => "Mozilla/5.0"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
       patch no_password.session_confirmations_path(token: "Invalid-Token")
 
       assert_nil request.session["—-no_password_session_id"]
