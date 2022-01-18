@@ -25,6 +25,17 @@ module NoPassword
 
     private
 
+    def sign_in(session_model, key = nil, data = nil)
+      if session_model.claimed? && !session_model.expired?
+        session[session_key] = session_model.id
+
+        if key.present? && data.present?
+          session[session_key(key)] = data
+        end
+        session_model
+      end
+    end
+
     def sign_in_session(session)
       claimed_session = SessionManager.new.claim(session.token, session.email)
       sign_in(claimed_session)
