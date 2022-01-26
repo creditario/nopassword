@@ -27,7 +27,7 @@ NoPassword permite realizar autenticación de sesiones con un token o un link m�
 
 Es necesario tener instalado lo siguiente:
 
- - TailwindCSS (vía Webpack, Bundling, PostCSS o la gema de Rails).
+ - TailwindCSS (vía Webpack, Bundling, PostCSS).
  - Ejecutar los [scripts](#scripts) de JS y CSS (vía Webpack, los Bundlings (JS/CSS) o importmaps y postcss).
  - Stimulus (vía Webpack, Bundling o Importmaps.)
 
@@ -105,16 +105,13 @@ config.i18n.available_locales = [:en, :es]
 ```
 
 ### Configuración para emails
-Asegurate de tener declarado un host para `default_url_options` en tus archivos de `config/enviroments`(`development.rb`, `production.rb` y `test.rb`) 
+Para el correcto funcionamiento de los assets dentro de los emails es necesario establecer `asset_host` para action_mailer.
 
-Aquí tienes un ejemplo de default_url_options para el environment de `development.rb`:
+También asegurate de tener declarado un host para `default_url_options` en tus archivos de `config/enviroments`(`development.rb`, `production.rb` y `test.rb`). 
+
+Aquí tienes un ejemplo de como declarar ambas configuraciones para el environment de `development.rb`:
 ```bash
 config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-```
-
-Para el correcto funcionamiento de los assets dentro de los emails, es necesario añadir la siguiente línea en `config/application.rb`:
-
-```bash
 config.action_mailer.asset_host = "http://localhost:3000"
 ```
 
@@ -140,62 +137,13 @@ Asegurate de tener declarado `:letter_opener` como `delivery_method` y `perform_
 
 ### Configuración de Tailwind
 
-En el archivo `tailwind.config.js` ubicado en la raíz de tu proyecto, copia lo siguiente:
+Para configurar el archivo `tailwind.config.js` utiliza el siguiente comando:
 
 ```bash
-function withOpacityValue(variableName) {
-  return ({opacityValue}) => {
-    opacityValue = opacityValue ?? 1;
-    return `rgba(var(${variableName}), ${opacityValue})`
-  }
-};
-
-module.exports = {
-  content: [
-    './app/**/*.{erb,rb,js}',
-  ],
-  theme: {
-    extend: {
-      textColor: {
-        skin: {
-          inverted: withOpacityValue('--color-inverted'),
-          accented: withOpacityValue('--color-accented'),
-          'accented-hover': withOpacityValue('--color-accented-hover'),
-          base: withOpacityValue('--color-base'),
-          muted: withOpacityValue('--color-muted'),
-          dimmed: withOpacityValue('--color-dimmed'),
-          error: withOpacityValue('--color-error'),
-        }
-      },
-      backgroundColor: {
-        skin: {
-          'button-accented': withOpacityValue('--color-accented'),
-          'button-accented-hover': withOpacityValue('--color-accented-hover'),
-          'button-inverted': withOpacityValue('--color-inverted'),
-          'button-inverted-hover': withOpacityValue('--color-inverted-hover'),
-          muted: withOpacityValue('--color-muted'),
-          dimmed: withOpacityValue('--color-dimmed'),
-          accent: withOpacityValue('--color-accent'),
-        }
-      },
-      ringColor: {
-        skin: {
-          accented: withOpacityValue('--color-border-accented'),
-        }
-      },
-      borderColor: {
-        skin: {
-          base: withOpacityValue('--color-border-base'),
-          accented: withOpacityValue('--color-border-accented'),
-        }
-      }
-    },
-  },
-  plugins: [
-    require('@tailwindcss/forms')
-  ],
-}
+$ bin/rails app:template LOCATION=https://raw.githubusercontent.com/armandoescalier/engines_views_setup/main/engines_views_setup.rb
 ```
+
+El archivo `tailwind.config.js` debe estar ubicado en la raíz de tu proyecto para que la configuración se realice correctamente.
 
 ## Uso
 
