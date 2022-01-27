@@ -19,5 +19,5 @@ namespace :no_password do
 end
 
 if Rake::Task.task_defined?("assets:precompile")
-  Rake::Task["assets:precompile"].enhance(["no_password:tailwind:build"])
+  Rake::Task["assets:precompile"].enhance(["no_password:tailwindcss:build"])
 end
