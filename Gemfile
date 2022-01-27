@@ -6,14 +6,13 @@ gemspec
 
 # To use puma
 gem "puma"
-
-gem "jsbundling-rails"
-gem "cssbundling-rails"
-gem "turbo-rails"
-
 gem "pg"
-
 gem "sprockets-rails"
+gem "turbo-rails"
+gem "tailwindcss-rails"
+gem "stimulus-rails"
+gem "importmap-rails"
+
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 

@@ -16,6 +16,11 @@ test/dummy/tmp/
 test/dummy/app/assets/builds/*
 test/dummy/.byebug_history
 test/dummy/public/assets/*
+test/dummy/app/assets/config/no_password/*
+test/dummy/app/javascript/no_password/*
+test/dummy/config/initializers/no_password*
+test/dummy/app/views/layouts/no_password/*
+test/dummy/app/views/no_password/*
 
 # Ignore Node Modules
 node_modules/

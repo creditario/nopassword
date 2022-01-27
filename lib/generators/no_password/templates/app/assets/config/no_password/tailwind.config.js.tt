@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 function withOpacityValue(variableName) {
   return ({opacityValue}) => {
     opacityValue = opacityValue ?? 1;
@@ -7,11 +9,13 @@ function withOpacityValue(variableName) {
 
 module.exports = {
   content: [
-    './app/**/*.{erb,rb,js}',
-    '../../app/**/*.{erb,rb,js}',
+  <%= NoPassword.configuration.tailwind_content.map{|path| "'#{path}'"}.join(",\n") %>
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+      },
       textColor: {
         skin: {
           inverted: withOpacityValue('--color-inverted'),

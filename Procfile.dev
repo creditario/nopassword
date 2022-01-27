@@ -1,3 +1,3 @@
 web: rails server -p 3090
-js: cd test/dummy && yarn build --watch
-css: cd test/dummy && yarn build:css --watch
+no_password_css: bin/rails app:no_password:tailwindcss:watch
+css: bin/rails app:tailwindcss:watch
