@@ -3,7 +3,7 @@ require_relative "lib/no_password/version"
 Gem::Specification.new do |spec|
   spec.name = "no_password"
   spec.version = NoPassword::VERSION
-  spec.authors = ["Armando Escalier", "Juan Bojorges"]
+  spec.authors = ["Mario Alberto Chávez", "Armando Escalier", "Juan Bojorges"]
   spec.homepage = "https://creditar.io"
   spec.summary = "Summary of NoPassword."
   spec.description = "Description of NoPassword."
@@ -19,7 +19,12 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", "~> 7.0.0.alpha2"
+  spec.add_dependency "rails", "~> 7.0.1"
+  spec.add_dependency "sprockets-rails"
+  spec.add_dependency "turbo-rails", "~> 1.0.0"
+  spec.add_dependency "stimulus-rails", "~> 1.0.0"
+  spec.add_dependency "importmap-rails", "~> 1.0.0"
+  spec.add_dependency "tailwindcss-rails", "~> 2.0.0"
   spec.add_development_dependency "standard"
   spec.add_development_dependency "brakeman"
   spec.add_development_dependency "bundle-audit"

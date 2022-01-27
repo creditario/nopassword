@@ -1,3 +1,4 @@
+# This migration comes from no_password (originally 20211202211706)
 class CreateNoPasswordSessions < ActiveRecord::Migration[7.0]
   def change
     create_table :no_password_sessions, if_not_exists: true do |t|
