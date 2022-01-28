@@ -1,0 +1,14 @@
+en:
+  no_password:
+    sessions:
+      new:
+        title: "Login"
+        description: "You are going to recieve a token in your email, required to login."
+        login: "Login"
+
+    session_confirmations:
+      edit:
+        title: "Login"
+        description: "Use the token or URL recieved in your email. If can not find it, look for it in your spam folder."
+        submit: "Login"
+        request_token: "Request new token"

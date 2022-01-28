@@ -13,7 +13,7 @@
             <%= t("no_password.session_confirmations.edit.description") %>
           </p>
           <div>
-            <label class="block text-sm font-medium text-skin-muted"><%= form.label :código %></label>
+            <label class="block text-sm font-medium text-skin-muted"><%= form.label t("form.labels.token") %></label>
             <div class="mt-1">
               <%= form.text_field :token, maxlength: 60, required: true, class: "input w-full", type: "text", placeholder: t("form.placeholders.token") %>
             </div>
@@ -22,7 +22,7 @@
             <%= form.submit t("form.submit.login"), class: "w-full flex button button-accented" %>
           </div>
           <div>
-            <%= link_to "Solicitar nuevo código", no_password.new_session_path, class: "w-full block text-center text-skin-accented hover:text-skin-accented-hover" %>
+            <%= link_to t("no_password.session_confirmations.edit.request_token"), no_password.new_session_path, class: "w-full block text-center text-skin-accented hover:text-skin-accented-hover" %>
           </div>
         <% end %>
       </div>

@@ -1,0 +1,11 @@
+en:
+  flash:
+    update:
+      invalid_code:
+        alert:
+          title: It is not possible to login
+          description: The token is invalid or has already expired. Request a new one.
+      session:
+        alert:
+          title: Access denied
+          description: You must login first

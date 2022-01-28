@@ -1,0 +1,22 @@
+en:
+  layouts:
+    no_password:
+      mailer:
+        service: Service provided by
+        platform: The banking core platform on which to run your financial business.
+        from: no-reply@creditar.io
+    mailer: 
+      from: no-reply@creditar.io
+
+  mailers:
+    default_from: no-reply@creditar.io
+
+    send_token:
+      subject: "Here is your temporary login token"
+      greetings: "Login."
+      instructions_1: "Use this link to %{href}"
+      instructions_1a: "login"
+      instructions_1_text: "Use this link to login"
+      instructions_2: "Or use this token"
+      instructions_3: "If you did not request this email, please ignore and delete it. 
+                       Do not resend or share it with other people."

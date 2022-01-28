@@ -11,3 +11,4 @@ es:
         title: "Iniciar sesión"
         description: "Utilice el código o la URL que recibió en su correo. Si no lo encuentra, búsquelo en la bandeja de Spam."
         submit: "Iniciar sesión"
+        request_token: "Solicitar nuevo código"
