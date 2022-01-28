@@ -7,6 +7,9 @@ log/*.log
 pkg/
 tmp/*/*/*
 
+#Ignore tailwind.config.js created in engine
+app/assets/config/no_password/tailwind.config.js
+
 # Ignore dummy files.
 test/dummy/db/*.sqlite3
 test/dummy/db/*.sqlite3-*
