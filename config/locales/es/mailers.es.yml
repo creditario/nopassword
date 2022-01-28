@@ -1,10 +1,12 @@
 es:
   layouts:
-      no_password_mailer:
+    no_password:
+      mailer:
         service: Servicio de
         platform: La plataforma de core bancario sobre la cual ejecutar tu negocio financiero.
-      mailer:
         from: no-reply@creditar.io
+    mailer:
+      from: no-reply@creditar.io
 
   mailers:
     default_from: no-reply@creditar.io
