@@ -66,7 +66,7 @@ Este es un ejemplo:
 ```
 
 ### Configurar idiomas
-NoPassword funciona en español, es necesario que en `config/application.rb` tengas habilitado el idioma español, utiliza las siguientes líneas:
+NoPassword funciona en español (`:es`) y en inglés (`:en`), es necesario que en `config/application.rb` tengas habilitado alguno de los dos idiomas por default, utiliza las siguientes líneas:
 ```bash
 config.i18n.default_locale = :es
 config.i18n.available_locales = [:en, :es]
@@ -102,7 +102,7 @@ Asegurate de tener declarado `:letter_opener` como `delivery_method` y `perform_
 
 ### Personalización de vistas
 
-Para personalizar las vistas de la gema, utiliza este comando que copia las vistas del engine dentro de tu aplicación. Los archivos se generan dentro de `views/no_password` y `views/layouts/no_password`.
+Este paso no es necesario, con los pasos anteriores se obtienen las vistas default de la gema, pero si así lo requieres puedes personalizar las vistas de la gema, utiliza este comando que copia las vistas del engine dentro de tu aplicación. Los archivos se generan dentro de `views/no_password` y `views/layouts/no_password`.
 
 ```bash
 $ rails no_password:install:copy_templates
@@ -110,7 +110,7 @@ $ rails no_password:install:copy_templates
 
 ## Uso
 
-El inicio de sesión puede hacerse por medio de un link mágico presente en el email o mediante el token adjunto, ingresándolo en el formulario de la ruta: `/no_password/confirmations`.
+El inicio de sesión puede hacerse por medio de un link mágico presente en el email o mediante el token adjunto, ingresándolo en el formulario de la ruta: `/p/confirmations`.
 
 Ambos métodos redireccionan al `root_path` default de tu aplicación.
 
@@ -157,18 +157,20 @@ $ ./bin/dev
 
 ### Rutas
 
-Por default, NoPassword tiene tres rutas principales:
+La ruta por default de la gema es `/p`.
+
+NoPassword tiene tres rutas principales:
 
 Para iniciar sesión, el path `no_password.new_session_path` muestra la vista para introducir un email, al que será enviado un token único y expirable:
 
 ```bash
-   <%= no_password.new_session_path %> # => /no_password/sessions/new #
+   <%= no_password.new_session_path %> # => /p/sessions/new #
 ```
 
 Para ingresar el token, el path `no_password.edit_session_confirmations_path` muestra la vista con el formulario:
 
 ```bash
-   <%= no_password.edit_session_confirmations_path %> # => /no_password/confirmations #
+   <%= no_password.edit_session_confirmations_path %> # => /p/confirmations #
 ```
 
 Para cerrar sesión es necesario enviar `current_session.id` al path `no_password.session_path` con el método `delete`:
