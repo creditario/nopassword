@@ -27,7 +27,7 @@ module NoPassword
     private
 
     def referrer_path(return_to)
-      referrer = request.referrer.present? ? URI(request.referrer).path : CGI.unescape(return_to)
+      referrer = CGI.unescape(return_to)
       return nil if referrer.blank?
 
       referrer.include?(no_password.new_session_path) || referrer.include?(no_password.edit_session_confirmations_path) ? nil : referrer
