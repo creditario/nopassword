@@ -1,19 +1,9 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 module NoPassword
   class SessionsControllerTest < ActionDispatch::IntegrationTest
-    test "referer_path is nil if HTTP_REFERER is originated from engine's new_session_path" do
-      get no_password.new_session_path, headers: {HTTP_REFERER: no_password.new_session_url}
-
-      assert_nil session[:referrer_path]
-    end
-
-    test "referer_path is present if HTTP_REFERER is originated from a internal url" do
-      get no_password.new_session_path, headers: {HTTP_REFERER: no_password.sessions_url}
-
-      assert session[:referrer_path]
-    end
-
     test "it creates a session with nil referer_path if HTTP_REFERER is originated from engine's new_session_path" do
       get no_password.new_session_path, headers: {HTTP_REFERER: no_password.new_session_url}
       post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
@@ -29,14 +19,13 @@ module NoPassword
     end
 
     test "it creates a session with referer_path if HTTP_REFERER is originated from an internal url" do
-      get no_password.new_session_path, headers: {HTTP_REFERER: no_password.sessions_url}
-      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+      post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0", HTTP_REFERER: "/secure_place"}
 
       assert NoPassword::Session.last.return_url
     end
 
-    test "it redirects to redirect_to no_password.edit_session_confirmations_path if current_session.present?" do
-      get no_password.new_session_path, headers: {HTTP_REFERER: no_password.sessions_url}
+    test "it redirects to no_password.edit_session_confirmations_path if current_session.present?" do
+      get no_password.new_session_path, headers: {HTTP_REFERER: "/secure_place"}
       post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
 
       assert_redirected_to no_password.edit_session_confirmations_path

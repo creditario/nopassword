@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class NavigationTest < ActionDispatch::IntegrationTest
   test "It redirects to no_password.new_session_path if no session is currently active" do
-    get "/home/1"
+    path = "/home/1"
+    get path
 
-    assert_redirected_to no_password.new_session_path
+    assert_redirected_to no_password.new_session_path(return_to: CGI.escape(path))
   end
 
   test "It shows No active session title on Home#index if no session is currently active" do
