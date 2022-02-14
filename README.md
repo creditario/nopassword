@@ -11,6 +11,7 @@ NoPassword permite realizar autenticación de sesiones con un token o un link m�
     - [Configuración para emails](#configuración-para-emails)
       - [Uso de letter opener](#uso-de-letter-opener)
     - [Personalización de vistas](#personalización-de-vistas)
+    - [Reconstruir el build de Tailwind](#reconstruir-el-build-de-tailwind)
 - [Uso](#uso)
   - [Filtros de controlador y helpers](#filtros-de-controlador-y-helpers)
   - [Helper methods](#helper-methods)
@@ -27,6 +28,9 @@ Es necesario tener instalado lo siguiente:
 
  - TailwindCSS (vía Webpack, Bundling, PostCSS o la gema de Rails).
  - Stimulus (vía Webpack, Bundling o Importmaps.)
+
+
+Para el correcto funcionamiento de NoPassword además es requerido instalar la gema [tailwindcss-rails](https://github.com/rails/tailwindcss-rails).
 
 En caso de no contar con ellos, puedes ver un ejemplo de la instalación de dichos requerimientos en [Instalación de requerimientos](#instalación-de-requerimientos).
 
@@ -108,6 +112,13 @@ Este paso no es necesario, con los pasos anteriores se obtienen las vistas defau
 $ rails no_password:install:copy_templates
 ```
 
+### Reconstruir el build de Tailwind
+
+En caso de estar desarrollando el proyecto entre varias personas puede que sea necesario volver a generar el build de TailwindCSS al probar el proyecto en local, esto debido a que el archivo `tailwind.config.js` puede contener paths en su sección `content` que no corresponden a tus archivos locales causando errores, para hacerlo utiliza el siguiente comando:
+```bash
+$ rails no_password:tailwindcss:build
+```
+
 ## Uso
 
 El inicio de sesión puede hacerse por medio de un link mágico presente en el email o mediante el token adjunto, ingresándolo en el formulario de la ruta: `/p/confirmations`.
@@ -118,7 +129,12 @@ Ambos métodos redireccionan al `root_path` default de tu aplicación.
 
 NoPassword incluye algunos helpers, disponibles para su uso en tus controladores y vistas.
 
-Para añadir la autenticación a una acción en un controlador, solamente necesitas añadir este `before_action`:
+Durante la instalación de la gema se añade de forma automatica un `include` en el `ApplicationController` de tu aplicación, esto permite hacer uso de helpers y filtros, asegúrate de que dicha linea este presente o agrégala manualmente en caso de que no sea así:
+```bash
+  include NoPassword::Concerns::ControllerHelpers
+```
+
+Para añadir la autenticación a una acción en un controlador, solamente necesitas usar este `before_action`:
 
 ```bash
   before_action :authenticate_session!, only: [:show]
@@ -223,7 +239,7 @@ $ rails no_password:tailwindcss:watch
 ## Instalación de requerimientos
 
 ### TailwindCSS
-en caso de que tu aplicación no cuente con TailwindCSS, te recomendamos instalar la gema de [tailwindcss-rails](https://github.com/rails/tailwindcss-rails) en tu aplicación.
+En caso de que tu aplicación no cuente con TailwindCSS, te recomendamos instalar la gema de [tailwindcss-rails](https://github.com/rails/tailwindcss-rails) en tu aplicación.
 
 Corre los siguientes comandos para instalarlo.
 ```bash
