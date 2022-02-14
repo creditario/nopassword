@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 module NoPassword
@@ -31,10 +33,11 @@ module NoPassword
     end
 
     test "it checks 'authenticate_session!' functionality, it can't access to main_app.home_path if signed_in_session? is false" do
-      get "/home/1"
+      path = "/home/1"
+      get path
 
       refute @controller.signed_in_session?
-      assert_redirected_to no_password.new_session_path
+      assert_redirected_to no_password.new_session_path(return_to: CGI.escape(path))
     end
   end
 end

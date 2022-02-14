@@ -5,13 +5,13 @@ module NoPassword
     include Concerns::ControllerHelpers
 
     def new
-      session[:referrer_path] = referrer_path
-
+      @return_to = params[:return_to].to_s
       @resource = Session.new
     end
 
     def create
-      current_session = SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, session[:referrer_path])
+      return_to = params[:return_to].to_s
+      current_session = SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, referrer_path(return_to))
 
       if current_session.present?
         SessionsMailer.with(session: current_session).send_token.deliver_now
@@ -26,11 +26,11 @@ module NoPassword
 
     private
 
-    def referrer_path
-      return nil if request.referer.blank?
+    def referrer_path(return_to)
+      referrer = request.referrer.present? ? URI(request.referrer).path : CGI.unescape(return_to)
+      return nil if referrer.blank?
 
-      return_path = URI(request.referrer).path
-      return_path == no_password.new_session_path || return_path == no_password.edit_session_confirmations_path ? nil : return_path
+      referrer.include?(no_password.new_session_path) || referrer.include?(no_password.edit_session_confirmations_path) ? nil : referrer
     end
 
     def sign_out(key = nil)

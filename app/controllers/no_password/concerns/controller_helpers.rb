@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support/concern"
-
 module NoPassword
   module Concerns
     module ControllerHelpers
@@ -18,10 +16,7 @@ module NoPassword
         end
 
         def authenticate_session!
-          unless signed_in_session?
-            session[:referrer_path] = request.fullpath
-            redirect_to no_password.new_session_path, alert: t("flash.update.session.alert")
-          end
+          redirect_to no_password.new_session_path(return_to: CGI.escape(request.fullpath)), alert: t("flash.update.session.alert") unless signed_in_session?
         end
 
         helper_method :current_session, :signed_in_session?
