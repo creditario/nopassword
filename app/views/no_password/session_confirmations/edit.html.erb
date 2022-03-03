@@ -8,23 +8,7 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <%= form_with url: no_password.session_confirmations_path, method: "patch", class: "space-y-6" do |form| %>
-          <p class="text-skin-muted px-4 text-center">
-            <%= t("no_password.session_confirmations.edit.description") %>
-          </p>
-          <div>
-            <label class="block text-sm font-medium text-skin-muted"><%= form.label t("form.labels.token") %></label>
-            <div class="mt-1">
-              <%= form.text_field :token, maxlength: 60, required: true, class: "input w-full", type: "text", placeholder: t("form.placeholders.token") %>
-            </div>
-          </div>
-          <div>
-            <%= form.submit t("form.submit.login"), class: "w-full flex button button-accented" %>
-          </div>
-          <div>
-            <%= link_to t("no_password.session_confirmations.edit.request_token"), no_password.new_session_path, class: "w-full block text-center text-skin-accented hover:text-skin-accented-hover" %>
-          </div>
-        <% end %>
+        <%= render partial: "form" %>
       </div>
     </div>
   </div>

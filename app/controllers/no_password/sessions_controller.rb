@@ -15,7 +15,11 @@ module NoPassword
 
       if current_session.present?
         SessionsMailer.with(session: current_session).send_token.deliver_now
-        redirect_to no_password.edit_session_confirmations_path
+
+        respond_to do |format|
+          format.html { redirect_to no_password.edit_session_confirmations_path }
+          format.turbo_stream
+        end
       end
     end
 
