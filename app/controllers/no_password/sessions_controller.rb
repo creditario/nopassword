@@ -16,6 +16,8 @@ module NoPassword
       if current_session.present?
         SessionsMailer.with(session: current_session).send_token.deliver_now
 
+        after_session_request if respond_to?(:after_session_request)
+
         respond_to do |format|
           format.html { redirect_to no_password.edit_session_confirmations_path }
           format.turbo_stream
