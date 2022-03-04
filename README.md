@@ -15,6 +15,7 @@ NoPassword permite realizar autenticación de sesiones con un token o un link m�
 - [Uso](#uso)
   - [Filtros de controlador y helpers](#filtros-de-controlador-y-helpers)
   - [Helper methods](#helper-methods)
+  - [Callbacks](#callbacks)
   - [Rutas](#rutas)
 - [Generadores disponibles](#generadores-disponibles)
 - [Instalación de requerimientos](#instalación-de-requerimientos)
@@ -169,6 +170,44 @@ Este es un ejemplo de como se usan en las vistas:
 Al finalizar la instalación y configuración de la gema puedes probar tu aplicación con el comando `./bin/dev`
 ```bash
 $ ./bin/dev
+```
+
+### Callbacks
+
+Si requieres tener más control sobre lo que pasa después de hacer login, tienes disponible el siguiente callback:
+```ruby
+after_sign_in!(signed_in, by_url)
+```
+#### Parámetros
+
+El callback tiene dos parámetros que funcionan de la siguiente manera:
+
+El valor de `signed_in` es `true` cuando la sesión se inicia exitosamente y su valor es `false` cuando no.
+
+El valor de `by_url` es `true` cuando intentas iniciar sesión por medio del link y su valor es `false` cuando ingresas el token manualmente en el formulario.
+
+#### Ejemplo
+
+Para implementarlo, añade el método `after_sign_in!` dentro del controlador `session_confirmations_controller.rb` mediante un `class.eval`.
+
+Un ejemplo de cómo utilizar el callback:
+
+```ruby
+load NoPassword::Engine.root.join("app", "controllers", "no_password", "session_confirmations_controller.rb")
+
+NoPassword::SessionConfirmationsController.class_eval do
+  private
+
+  def after_sign_in!(signed_in, by_url)
+    return example_method if signed_in
+    return nil unless by_url
+
+    flash[:alert] = "No es posible iniciar sesión"
+    redirect_to main_app.example_path
+  end
+
+  ...
+end
 ```
 
 ### Rutas
