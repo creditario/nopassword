@@ -9,7 +9,7 @@ module NoPassword
       if params[:token].present?
         friendly_token = verify_token(params[:token])
 
-        sign_in_session(friendly_token)
+        sign_in_session(friendly_token, true)
       end
     end
 
@@ -23,23 +23,23 @@ module NoPassword
 
     private
 
-    def sign_in_session(friendly_token)
+    def sign_in_session(friendly_token, by_url = false)
       current_session = find_and_validate_token(friendly_token)
 
       result = if current_session.blank? && respond_to?(:after_sign_in!)
-        after_sign_in!(false)
+        after_sign_in!(false, by_url)
       elsif current_session.present?
-        claim_session(current_session)
+        claim_session(current_session, by_url)
       end
 
       result if result.present?
     end
 
-    def claim_session(session)
+    def claim_session(session, by_url = false)
       claimed_session = SessionManager.new.claim(session.token, session.email)
       save_session_to_cookie(claimed_session)
 
-      return after_sign_in!(true) if respond_to?(:after_sign_in!)
+      return after_sign_in!(true, by_url) if respond_to?(:after_sign_in!)
 
       redirect_to session.return_url || main_app.root_path
     end
