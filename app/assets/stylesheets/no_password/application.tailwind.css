@@ -4,16 +4,16 @@
 
 @layer base {
   :root {
-    --color-base: 17, 24, 39;
-    --color-accented: 43,89,101;
+    --color-base: 31, 27, 54;
+    --color-accented: 80, 70, 137;
     --color-inverted: 255, 255, 255;
-    --color-accented-hover: 29,59,67;
+    --color-accented-hover: 60, 53, 103;
     --color-muted: 55, 65, 81;
     --color-dimmed: 75, 85, 99;
     --color-error: 220, 38, 38;
 
     --color-border-base: 209, 213, 219;
-    --color-border-accented: 43,89,101;
+    --color-border-accented: 80, 70, 137;
   }
 
   .input {
