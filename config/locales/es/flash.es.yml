@@ -7,5 +7,5 @@ es:
           description: El código no es válido o ya expiró. Solicite uno nuevo.
       session:
         alert:
-          title: Acceso denegado
-          description: Debes de iniciar sesión primero
+          title: No existe sesión activa
+          description: Inicie sesión para continuar

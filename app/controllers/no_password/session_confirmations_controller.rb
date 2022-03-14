@@ -27,7 +27,7 @@ module NoPassword
       current_session = find_and_validate_token(friendly_token)
 
       result = if current_session.blank? && respond_to?(:after_sign_in!)
-        after_sign_in!(false, by_url)
+        after_sign_in!(false, by_url, @return_url)
       elsif current_session.present?
         claim_session(current_session, by_url)
       end
@@ -39,7 +39,7 @@ module NoPassword
       claimed_session = SessionManager.new.claim(session.token, session.email)
       save_session_to_cookie(claimed_session)
 
-      return after_sign_in!(true, by_url) if respond_to?(:after_sign_in!)
+      return after_sign_in!(true, by_url, @return_url) if respond_to?(:after_sign_in!)
 
       redirect_to session.return_url || main_app.root_path
     end
@@ -55,6 +55,7 @@ module NoPassword
 
     def find_and_validate_token(friendly_token)
       session = Session.find_by(token: friendly_token)
+      @return_url = session&.return_url
 
       if session.nil? || session&.invalid?
         flash.now.alert = t("flash.update.invalid_code.alert")
