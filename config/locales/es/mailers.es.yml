@@ -4,12 +4,12 @@ es:
       mailer:
         service: Servicio de
         platform: La plataforma de core bancario sobre la cual ejecutar tu negocio financiero.
-        from: no-reply@creditar.io
+        from: no-reply@aoorora.com
     mailer:
-      from: no-reply@creditar.io
+      from: no-reply@aoorora.com
 
   mailers:
-    default_from: no-reply@creditar.io
+    default_from: no-reply@aoorora.com
 
     send_token:
       subject: "Su código de sesión temporal está aquí."
