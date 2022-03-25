@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NoPassword
   class SessionsMailer < ApplicationMailer
     include Concerns::WebTokens
@@ -8,7 +10,7 @@ module NoPassword
       @friendly_token = @session.token
       @signed_token = token_to_url(sign_token(@friendly_token))
 
-      mail(to: @session.email, from: t("layouts.mailer.from"), subject: t("mailers.send_token.subject"))
+      mail(to: @session.email, subject: t("mailers.send_token.subject"))
     end
   end
 end

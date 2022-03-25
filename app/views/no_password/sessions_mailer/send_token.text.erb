@@ -1,5 +1,12 @@
+<%= t("mailers.send_token.subject") %>
+
 <%= t("mailers.send_token.greetings") %>
 
-<%= t("mailers.send_token.instructions_1_text") %> <%= no_password.session_confirmation_url(token: @signed_token)%>
-<%= t("mailers.send_token.instructions_2") %><%= @friendly_token %>
+<%= t("mailers.send_token.instructions_1") %>
+
+<%= @friendly_token %>
+
+<%= t("mailers.send_token.instructions_2") %>
+<%= no_password.session_confirmation_url(token: @signed_token)%>
+
 <%= t("mailers.send_token.instructions_3") %>

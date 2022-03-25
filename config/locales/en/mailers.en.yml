@@ -4,12 +4,12 @@ en:
       mailer:
         service: Service provided by
         platform: The banking core platform on which to run your financial business.
-        from: no-reply@creditar.io
+        from: no-reply@aoorora.com
     mailer: 
-      from: no-reply@creditar.io
+      from: no-reply@aoorora.com
 
   mailers:
-    default_from: no-reply@creditar.io
+    default_from: no-reply@aoorora.com
 
     send_token:
       subject: "Here is your temporary login token"
