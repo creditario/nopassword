@@ -2,21 +2,17 @@ es:
   layouts:
     no_password:
       mailer:
-        service: Servicio de
+        service: Servicio de Aoorora
         platform: La plataforma de core bancario sobre la cual ejecutar tu negocio financiero.
-        from: no-reply@aoorora.com
-    mailer:
-      from: no-reply@aoorora.com
 
   mailers:
     default_from: no-reply@aoorora.com
 
     send_token:
-      subject: "Su código de sesión temporal está aquí."
-      greetings: "Iniciar sesión."
-      instructions_1: "Utilice esta liga para %{href}"
-      instructions_1a: "iniciar sesión"
-      instructions_1_text: "Utilice esta liga para iniciar sesión"
-      instructions_2: "O utilice el código "
-      instructions_3: "Si usted no solicitó este correo, por favor haga caso omiso de él 
+      subject: "Aoorora: Su código de sesión temporal está aquí."
+      greetings: "Hola!"
+      session: Iniciar sesión
+      instructions_1: "Usted solicitó un código de acceso a nuestro servicio. Su código temporal es el siguiente."
+      instructions_2: "O puede utilizar el siguiente enlace para iniciar sesión automáticamente"
+      instructions_3: "Si usted no solicitó este correo, por favor haga caso omiso de él
       y eliminelo. No lo reenvie o comparta con otras personas."
