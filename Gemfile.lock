@@ -2,12 +2,12 @@ PATH
   remote: .
   specs:
     no_password (0.1.1)
-      importmap-rails (~> 1.0.0)
-      rails (~> 7.0.1)
+      importmap-rails (~> 1.1.0)
+      rails (~> 7.0.0)
       sprockets-rails
-      stimulus-rails (~> 1.0.0)
+      stimulus-rails (~> 1.1.0)
       tailwindcss-rails (~> 2.0.0)
-      turbo-rails (~> 1.0.0)
+      turbo-rails (~> 1.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -94,7 +94,7 @@ GEM
       activesupport (>= 5.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.0.3)
+    importmap-rails (1.1.5)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     json (2.6.2)
@@ -193,7 +193,7 @@ GEM
     standard (1.16.1)
       rubocop (= 1.35.1)
       rubocop-performance (= 1.14.3)
-    stimulus-rails (1.0.4)
+    stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.16-arm64-darwin)
       railties (>= 6.0.0)
@@ -203,8 +203,9 @@ GEM
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.0)
-    turbo-rails (1.0.1)
+    turbo-rails (1.1.1)
       actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
