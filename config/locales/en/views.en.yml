@@ -2,13 +2,11 @@ en:
   no_password:
     sessions:
       new:
-        title: "Login"
-        description: "You are going to recieve a token in your email, required to login."
-        login: "Login"
+        title: New session
+        description: Enter your email below to receive a code and a link to log in.
 
     session_confirmations:
       edit:
-        title: "Login"
-        description: "Use the token or URL recieved in your email. If can not find it, look for it in your spam folder."
-        submit: "Login"
-        request_token: "Request new token"
+        title: Confirm your session
+        description: We sent you an email. Use the code on it to continue or use the link provided. Check your spam folder if you can't find our email in your inbox.
+        request_token: Request new token

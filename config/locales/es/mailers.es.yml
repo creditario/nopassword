@@ -9,10 +9,10 @@ es:
     default_from: no-reply@aoorora.com
 
     send_token:
-      subject: "Aoorora: Su código de sesión temporal está aquí."
-      greetings: "Hola!"
-      session: Iniciar sesión
-      instructions_1: "Usted solicitó un código de acceso a nuestro servicio. Su código temporal es el siguiente."
-      instructions_2: "O puede utilizar el siguiente enlace para iniciar sesión automáticamente"
-      instructions_3: "Si usted no solicitó este correo, por favor haga caso omiso de él
-      y eliminelo. No lo reenvie o comparta con otras personas."
+      subject: Su código de sesión temporal está aquí.
+      greetings: Hola!
+      instructions_1: Usted solicitó un código de acceso a nuestro servicio. Su código temporal es el siguiente. Copie y pegue el código en nuestro sition. Por favor no comparta el código con otras personas.
+      instructions_2: O puede iniciar sesión automáticamente con el siguiente botón. Se abrirá una nueva ventana en su navegador.
+      instructions_2_text: O puede iniciar sesión automáticamente con el siguiente vínculo. Cópielo y péguelo en su navegador.
+      instructions_3: Si usted no solicitó este correo, por favor haga caso omiso de él y eliminelo. No lo reenvie o comparta con otras personas.
+      start_session: Continuar a su sessión

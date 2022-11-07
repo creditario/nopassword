@@ -2,14 +2,14 @@
 
 module NoPassword
   class SessionConfirmationsController < ApplicationController
-    include Concerns::ControllerHelpers
-    include Concerns::WebTokens
+    include NoPassword::ControllerHelpers
+    include NoPassword::WebTokens
 
     def edit
       if params[:token].present?
-        friendly_token = verify_token(params[:token])
+        token = verify_token(params[:token])
 
-        sign_in_session(friendly_token, true)
+        sign_in_session(token, true)
       end
     end
 
@@ -23,46 +23,24 @@ module NoPassword
 
     private
 
-    def sign_in_session(friendly_token, by_url = false)
-      current_session = find_and_validate_token(friendly_token)
+    def sign_in_session(token, by_url = false)
+      current_session = SessionManager.new.claim(token)
 
-      result = if current_session.blank? && respond_to?(:after_sign_in!)
-        after_sign_in!(false, by_url, @return_url)
+      flash.now.alert = t("flash.update.invalid_code.alert") if current_session.blank?
+
+      result = if respond_to?(:after_sign_in!)
+        after_sign_in!(current_session.present?, by_url, current_session&.return_url)
       elsif current_session.present?
-        claim_session(current_session, by_url)
+        save_session_to_cookie(current_session)
+        redirect_to(current_session.return_url || main_app.root_path)
       end
 
       result if result.present?
     end
 
-    def claim_session(session, by_url = false)
-      claimed_session = SessionManager.new.claim(session.token, session.email)
-      save_session_to_cookie(claimed_session)
-
-      return after_sign_in!(true, by_url, @return_url) if respond_to?(:after_sign_in!)
-
-      redirect_to session.return_url || main_app.root_path
-    end
-
-    def save_session_to_cookie(session_model, key = nil, data = nil)
-      if session_model.claimed? && !session_model.expired?
-        session[session_key] = session_model.id
-        session[session_key(key)] = data if key.present? && data.present?
-
-        session_model
-      end
-    end
-
-    def find_and_validate_token(friendly_token)
-      session = Session.find_by(token: friendly_token)
-      @return_url = session&.return_url
-
-      if session.nil? || session&.invalid?
-        flash.now.alert = t("flash.update.invalid_code.alert")
-        return nil
-      end
-
-      session
+    def save_session_to_cookie(current_session, key = nil, data = nil)
+      session[session_key] = current_session.id
+      session[session_key(key)] = data if key.present? && data.present?
     end
   end
 end

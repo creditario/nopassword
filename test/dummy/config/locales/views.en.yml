@@ -1,8 +1,7 @@
 en:
-  layouts:
-    header:
-      inactive_session:
-        status: "No active session"
-        button: "Sign in"
-      active_session:
-        button: "Sign out"
+  forget: Forget password
+  problems: problems
+  about: No more support issues due to wrong or forgotten passwords. Verify your users via email.
+  no_session: No session
+  start_session: Access to secure area
+  close_session: Close session

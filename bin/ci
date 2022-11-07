@@ -18,20 +18,4 @@ echo "Analyzing Ruby gems for"
 echo "security vulnerabilities"
 bundle exec bundle audit check --update
 
-echo "Analyzing Node modules"
-echo "for security vulnerabilities"
-
-set +e
-yarn audit --level=moderate
-yarn_exit_code=$?
-set -e
-if [ $yarn_exit_code -lt 4 ]; then
-  echo "Vulnerabilities were found, but only at"
-  echo "informational or low priority level"
-  echo "These do not need to be fixed, but you"
-  echo "should look into it."
-  echo "To see them run 'yarn audit'"
-else
-  exit 1
-fi
 echo "Done"

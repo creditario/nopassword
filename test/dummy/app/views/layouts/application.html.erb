@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dummy</title>
+    <title>Test app</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,10 +11,36 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= render partial: "header" %>
-    <main class="container mx-auto mt-28 px-5 flex flex-col">
-      <%= yield %>
+  <body class="min-h-full">
+    <main>
+      <div class="relative overflow-hidden">
+        <div class="relative pt-6 pb-16 sm:pb-24">
+          <div>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6">
+              <nav class="relative flex items-center justify-between sm:h-10 md:justify-center" aria-label="Global">
+                <div class="flex flex-1 items-center md:absolute md:inset-y-0 md:left-0">
+                  <div class="flex w-full items-center justify-between md:w-auto">
+                  </div>
+                </div>
+                <div class="hidden md:flex md:space-x-10">
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center justify-end">
+                  <span class="inline-flex rounded-md shadow">
+                    <span id="session_status" class="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50">
+                      <% if signed_in_session? %>
+                        <%= current_session.email %>
+                      <% else %>
+                        <%= t("no_session") %>
+                      <% end %>
+                    </span>
+                  </span>
+                </div>
+              </nav>
+            </div>
+          </div>
+
+          <%= yield %>
+        </div>
     </main>
   </body>
 </html>

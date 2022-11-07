@@ -3,33 +3,36 @@
 require "test_helper"
 
 class NavigationTest < ActionDispatch::IntegrationTest
-  test "It redirects to no_password.new_session_path if no session is currently active" do
-    path = "/home/1"
+  test "it redirects to start new session" do
+    path = main_app.secure_area_path
     get path
 
     assert_redirected_to no_password.new_session_path(return_to: CGI.escape(path))
   end
 
-  test "It shows No active session title on Home#index if no session is currently active" do
-    get "/"
+  test "it shows no active session" do
+    get main_app.root_path
 
-    assert_select "#session_status", "No active session"
+    assert_select "#session_status", "No session"
   end
 
-  test "It shows current_session email as title on Home#index if a session currently active" do
-    post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+  test "it shows active session" do
+    post no_password.session_path, params: {session: {email: "test@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
     patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
-    get "/"
 
-    assert_select "#session_status", @controller.current_session.email
-  end
+    follow_redirect!
 
-  test "It gets Home#show if a session is currently active" do
-    post no_password.sessions_path, params: {session: {email: "ana@example.com"}}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
-    patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
-    get "/home/1"
-
-    assert_select "#session_status", @controller.current_session.email
     assert_response :success
+    assert_select "#session_status", @controller.current_session.email
+  end
+
+  test "it access secure area" do
+    post no_password.session_path, params: {session: {email: "test@example.com"}, return_to: main_app.secure_area_path}, headers: {HTTP_USER_AGENT: "Mozilla/5.0"}
+    patch no_password.session_confirmations_path(token: NoPassword::Session.last.token)
+
+    assert_redirected_to "/show"
+    follow_redirect!
+
+    assert_select "#session_status", @controller.current_session.email
   end
 end

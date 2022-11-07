@@ -10,8 +10,7 @@ module NoPassword
 
     def expired?
       current_time = Time.zone.now
-
-      expires_at < current_time
+      expires_at <= current_time
     end
 
     def invalid?

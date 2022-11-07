@@ -2,13 +2,12 @@ es:
   no_password:
     sessions:
       new:
-        title: "Iniciar sesión"
-        description: "En su correo electrónico va a recibir el código necesario para iniciar sesión."
-        login: "Iniciar Sesión"
+        title: Nueva sesión
+        description: Introduzca su correo electrónico para recibir un código y un enlace mágico para iniciar sesión.
 
     session_confirmations:
       edit:
-        title: "Iniciar sesión"
-        description: "Utilice el código o la URL que recibió en su correo. Si no lo encuentra, búsquelo en la bandeja de Spam."
-        submit: "Iniciar sesión"
-        request_token: "Solicitar nuevo código"
+        title: Iniciar sesión
+        description: Utilice el código o la URL que recibió en su correo. Si no lo encuentra, búsquelo en la bandeja de Spam.
+        submit: Iniciar sesión
+        request_token: Solicitar nuevo código

@@ -2,7 +2,7 @@
 
 module NoPassword
   class SessionsController < ApplicationController
-    include Concerns::ControllerHelpers
+    include NoPassword::ControllerHelpers
 
     def new
       @return_to = params[:return_to].to_s
@@ -14,7 +14,7 @@ module NoPassword
       current_session = SessionManager.new.create(request.user_agent, params.dig(:session, :email), request.remote_ip, referrer_path(return_to))
 
       if current_session.present?
-        SessionsMailer.with(session: current_session).send_token.deliver_now
+        SessionsMailer.with(session: current_session).send_token.deliver_later
 
         after_session_request if respond_to?(:after_session_request)
 

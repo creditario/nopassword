@@ -17,9 +17,6 @@ FileUtils.chdir APP_ROOT do
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
-  puts "\n== Installing Javascript dependencies =="
-  system! "yarn check --check-files || yarn install"
-
   puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
@@ -32,5 +29,5 @@ FileUtils.chdir APP_ROOT do
   system! "bin/rails app:log:clear app:tmp:clear"
 
   # puts "\n== Restarting application server =="
-  # system! "overmind restart"
+  system! "overmind restart"
 end

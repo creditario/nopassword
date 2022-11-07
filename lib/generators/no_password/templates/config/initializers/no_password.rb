@@ -1,13 +1,10 @@
 NoPassword.configure do |config|
-  # Cookie session name
-  # config.session_name = "_session"
+  # Session expiration time
+  # config.session_expiration = 2.hours
   #
-  # Session expiration time in minutes
-  # config.session_expiration = 15
+  # Token expiration time
+  # config.token_expiration = 15.minutes
   #
-  # Session domain, use :all to include all subdomains
-  # config.session_domain = nil
-  #
-  # Secret Key to cypher data, if nil, Rails Secret Key is used
+  # Secret key to cypher tokens, if none, then Rails secret key is used
   # config.secret_key = nil
 end

@@ -9,12 +9,11 @@ module NoPassword
   end
 
   class Configuration
-    attr_accessor :session_name, :session_expiration, :session_domain, :secret_key, :tailwind_content, :importmap
+    attr_accessor :session_expiration, :token_expiration, :secret_key, :tailwind_content, :importmap
 
     def initialize
-      @session_name = "_session"
-      @session_expiration = 15
-      @session_domain = nil
+      @session_expiration = 2.hours
+      @token_expiration = 15.minutes
       @secret_key = nil
       @importmap = Importmap::Map.new
 

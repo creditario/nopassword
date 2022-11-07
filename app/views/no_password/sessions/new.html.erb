@@ -2,28 +2,13 @@
   <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <%= image_tag("no_password/aoo.svg", class:"mx-auto h-12 w-auto", alt: "Workflow")%>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-skin-base">
+      <h2 class="mt-6 text-center text-3xl font-bold text-skin-base leading-3">
         <%= t("no_password.sessions.new.title") %>
       </h2>
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <%= turbo_frame_tag :form do %>
-          <%= form_with model: @resource, local: true, url: no_password.sessions_path(return_to: @return_to), class: "space-y-6", html: {"data-turbo": false} do |form| %>
-            <p class="text-skin-muted px-4 text-center">
-                <%= t("no_password.sessions.new.description") %>
-            </p>
-            <div>
-              <label class="block text-sm font-medium text-skin-muted"><%= form.label :email %></label>
-              <div class="mt-1">
-                <%= form.text_field :email, maxlength: 60, required: true, class: "input w-full", type: "email", placeholder: t("form.placeholders.email") %>
-              </div>
-            </div>
-            <div>
-                <%= form.submit t("form.submit.login"), class: "w-full flex button button-accented" %>
-            </div>
-          <% end %>
-        <% end %>
+        <%= render partial: "form" %>
       </div>
     </div>
   </div>

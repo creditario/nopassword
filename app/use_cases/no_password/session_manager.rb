@@ -3,39 +3,45 @@
 module NoPassword
   class SessionManager
     def create(user_agent, email, remote_addr, return_url = nil)
-      expire_unclaimed_session(user_agent, email)
+      expire_unclaimed_session(email)
 
       Session.create(
         user_agent: user_agent,
         email: email,
-        expires_at: Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration),
+        expires_at: NoPassword.configuration.session_expiration.from_now,
         token: generate_friendly_token,
         remote_addr: remote_addr,
         return_url: return_url
       )
     end
 
-    def claim(token, email)
+    def claim(token)
       current_time = Time.zone.now
 
       session = Session
-        .where(token: token, email: email, claimed_at: nil)
+        .where(token: token, claimed_at: nil)
         .where("expires_at > ?", current_time)
         .first
 
-      session.update(claimed_at: current_time) if session.present?
-      session
+      if session.present?
+        session.claimed_at = current_time
+        session.save
+
+        return session
+      end
+
+      nil
     end
 
     private
 
-    def expire_unclaimed_session(user_agent, email)
+    def expire_unclaimed_session(email)
       current_time = Time.zone.now
-      sessions = Session
-        .where(user_agent: user_agent, email: email, claimed_at: nil)
-        .where("expires_at > ?", current_time)
 
-      sessions.each { |session| session.update(expires_at: current_time) }
+      Session
+        .where(email: email, claimed_at: nil)
+        .where("expires_at > ?", current_time)
+        .update_all(expires_at: current_time)
     end
 
     def generate_friendly_token

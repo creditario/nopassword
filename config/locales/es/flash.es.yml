@@ -3,9 +3,9 @@ es:
     update:
       invalid_code:
         alert:
-          title: No es posible iniciar sesión
-          description: El código no es válido o ya expiró. Solicite uno nuevo.
+          title: Código inválido
+          description: Revise su código no es válido o ya expiró. Puede solicitar uno nuevo.
       session:
         alert:
           title: No existe sesión activa
-          description: Inicie sesión para continuar
+          description: Inicie una sesión para continuar.

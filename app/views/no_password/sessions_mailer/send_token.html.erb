@@ -5,9 +5,10 @@
 <div style="margin: auto 0; text-align: center;">
   <%= link_to no_password.session_confirmation_url(token: @signed_token), class: "hover-bg-skin-button-accented-hover", style: "display: inline-block; margin: auto; border-radius: 6px; background-color: rgb(80, 70, 137); padding: 16px 24px; font-size: 16px; font-weight: 500; color: rgb(255, 255, 255); text-decoration: none; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);" do %>
     <!--[if mso]><i style="letter-spacing: 24px; mso-font-width: -100%; mso-text-raise: 26pt;">&nbsp;</i><![endif]-->
-    <span style="mso-text-raise: 13pt;"><%= t("mailers.send_token.session") %></span>
+    <span style="mso-text-raise: 13pt;"><%= t("mailers.send_token.start_session") %></span>
     <!--[if mso]><i style="letter-spacing: 24px; mso-font-width: -100%;">&nbsp;</i><![endif]-->
   <% end %>
 </div>
 
+<hr style="margin-top: 25px; margin-bottom: 25px; border: 1px solid #f3f4f6" />
 <p style="font-size: 16px; color: #374151;"><%= t("mailers.send_token.instructions_3") %></p>

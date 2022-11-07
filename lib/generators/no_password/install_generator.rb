@@ -14,7 +14,7 @@ module NoPassword
     def add_concerns
       inject_into_file "app/controllers/application_controller.rb", after: "ActionController::Base" do
         <<~EOF
-          \n  include NoPassword::Concerns::ControllerHelpers
+          \n  include NoPassword::ControllerHelpers
         EOF
       end
     end

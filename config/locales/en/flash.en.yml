@@ -3,9 +3,9 @@ en:
     update:
       invalid_code:
         alert:
-          title: It is not possible to login
-          description: The token is invalid or has already expired. Request a new one.
+          title: Token in invalid
+          description: Check your token, it maybe expired. Request a new one if you are unable to start a session.
       session:
         alert:
-          title: Access denied
-          description: You must login first
+          title: Unauthorized
+          description: Start a session to continue.

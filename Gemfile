@@ -7,7 +7,7 @@ gemspec
 # To use puma
 gem "puma"
 gem "pg"
-gem "sprockets-rails"
+gem "propshaft"
 gem "turbo-rails"
 gem "tailwindcss-rails"
 gem "stimulus-rails"

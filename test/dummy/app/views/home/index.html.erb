@@ -1,6 +1,23 @@
-<h1 class="font-semibold text-lg text-grey-700">Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-
-<div>
-  <%= link_to "Ir a show", home_path(1), class: "text-sky-600 hover:text-sky-700 hover:underline" %>
-</div>
+<main class="mx-auto mt-16 max-w-7xl px-4 sm:mt-24">
+  <div class="text-center">
+    <div class="mx-auto inline-block">
+      <svg xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-28 w-auto text-indigo-500">
+        <g stroke-linejoin="round" stroke-width="1.5">
+          <path d="M3 17L1.13 3.913c-.074-.517.264-1.003.774-1.114l7.662-1.703a2 2 0 0 1 .868 0L18.096 2.8c.51.113.848.596.774 1.114L17 17c-.07.495-.5 3.5-7 3.5S3.07 17.495 3 17z"/>
+          <path stroke-linecap="round" d="M7 9l3 2 3-2"/>
+        </g>
+        <path d="M5 13V8a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <h1 class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl md:text-6xl mt-8">
+      <span class="block xl:inline"><%= t("forget") %></span>
+      <span class="block text-indigo-600 xl:inline"><%= t("problems") %></span>
+    </h1>
+    <p class="mx-auto mt-3 max-w-md text-base text-gray-700 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl"><%= t("about") %></p>
+    <div class="mx-auto mt-5 max-w-md sm:flex sm:justify-center md:mt-8">
+      <div class="rounded-md shadow">
+        <%= link_to t("start_session"), secure_area_path, class: "flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:py-4 md:px-10 md:text-lg" %>
+      </div>
+    </div>
+  </div>
+</main>

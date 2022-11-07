@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      no_password/session: Session
+    attributes:
+      no_password/session:
+        email: Your email
+

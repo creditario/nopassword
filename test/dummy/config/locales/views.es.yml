@@ -1,8 +1,7 @@
 es:
-  layouts:
-    header:
-      inactive_session:
-        status: "No active session"
-        button: "Sign in"
-      active_session:
-        button: "Sign out"
+  forget: Olvida los problemas de
+  problems: contraseñas
+  about: No más problemas de soport debido a contraseñas incorrectas u olvidadas. Verifica a tus usuarios vía correo electrónico.
+  no_session: No hay sesión activa
+  start_session: Acceder a área segura
+  close_session: Cerrar sesión

@@ -3,132 +3,79 @@ require "test_helper"
 module NoPassword
   class SessionManagerTest < ActiveSupport::TestCase
     REMOTE_ADDR = "127.0.0.1"
+    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15"
 
     test "it creates a new session" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
+      email = "user@example.com"
 
       subject = NoPassword::SessionManager.new
+      assert_difference "NoPassword::Session.count" do
+        session = subject.create(USER_AGENT, email, REMOTE_ADDR)
 
-      session = subject.create(user_agent, email, REMOTE_ADDR)
-
-      refute_nil session
-      assert_nil session.claimed_at
-      refute_nil session.token
+        refute_nil session
+        assert_nil session.claimed_at
+        refute_nil session.token
+      end
     end
 
     test "it expires previous unclaimed session and creates a new one" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
-
-      NoPassword::Session.where(user_agent: user_agent, email: email).destroy_all
+      unclaimed_session = no_password_sessions(:session_unclaimed)
 
       subject = NoPassword::SessionManager.new
 
-      subject.create(user_agent, email, REMOTE_ADDR)
+      assert_difference "NoPassword::Session.count" do
+        subject.create(USER_AGENT, unclaimed_session.email, REMOTE_ADDR)
+      end
 
-      assert_equal 1, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
-
-      session = subject.create(user_agent, email, REMOTE_ADDR)
-
-      assert_equal 2, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
-      assert_equal session.id, query_unclaimed_not_expired_session(user_agent, email).ids.first
+      unclaimed_session.reload
+      assert unclaimed_session.expired?
     end
 
     test "it claims a not expired session using the token" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
-      NoPassword::Session.where(user_agent: user_agent, email: email).destroy_all
+      unclaimed_session = no_password_sessions(:session_unclaimed)
 
       subject = NoPassword::SessionManager.new
+      session = subject.claim(unclaimed_session.token)
 
-      session = subject.create(user_agent, email, REMOTE_ADDR)
-
-      assert_equal 1, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
-
-      subject.claim(session.token, email)
-
-      assert_equal 0, query_unclaimed_not_expired_session_count(user_agent, email)
+      refute_nil session
+      assert session.claimed?
     end
 
     test "it fails to claim not expired session with invalid token" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
+      unclaimed_session = no_password_sessions(:session_unclaimed)
 
       subject = NoPassword::SessionManager.new
+      session = subject.claim(unclaimed_session.token + "-invalid")
 
-      assert_equal 1, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
+      assert_nil session
 
-      subject.claim("Invalid-Token", email)
-
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
+      unclaimed_session.reload
+      refute unclaimed_session.claimed?
     end
 
     test "it fails to claim expired session" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
+      unclaimed_session = no_password_sessions(:session_unclaimed)
 
       subject = NoPassword::SessionManager.new
+      # By default sessions expires after two hours or 160 minutes
+      travel_to Time.zone.now.advance(minutes: 161) do
+        session = subject.claim(unclaimed_session.token)
 
-      assert_equal 1, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
+        assert_nil session
 
-      travel_to Time.zone.now.advance(minutes: 20)
-
-      subject.claim(existing_session.token, email)
-
-      assert_equal 1, query_unclaimed_expired_session_count(user_agent, email)
+        unclaimed_session.reload
+        refute unclaimed_session.claimed?
+        assert unclaimed_session.expired?
+      end
     end
 
     test "it fails to claim already claimed session" do
-      existing_session = no_password_sessions(:session_one)
-      user_agent = existing_session.user_agent
-      email = existing_session.email
+      claimed_session = no_password_sessions(:session_claimed)
 
       subject = NoPassword::SessionManager.new
+      session = subject.claim(claimed_session.token)
 
-      assert_equal 1, NoPassword::Session.where(user_agent: user_agent, email: email).count
-      assert_equal 1, query_unclaimed_not_expired_session_count(user_agent, email)
-
-      result = subject.claim(existing_session.token, email)
-
-      refute_nil result
-      assert_equal 0, query_unclaimed_not_expired_session_count(user_agent, email)
-
-      result = subject.claim(existing_session.token, email)
-
-      assert_nil result
-    end
-
-    private
-
-    def query_unclaimed_expired_session_count(user_agent, email)
-      NoPassword::Session
-        .where(user_agent: user_agent, email: email, claimed_at: nil)
-        .where("expires_at < ?", Time.zone.now)
-        .count
-    end
-
-    def query_unclaimed_not_expired_session_count(user_agent, email)
-      NoPassword::Session
-        .where(user_agent: user_agent, email: email, claimed_at: nil)
-        .where("expires_at > ?", Time.zone.now)
-        .count
-    end
-
-    def query_unclaimed_not_expired_session(user_agent, email)
-      NoPassword::Session
-        .where(user_agent: user_agent, email: email, claimed_at: nil)
-        .where("expires_at > ?", Time.zone.now)
+      assert_nil session
     end
   end
 end

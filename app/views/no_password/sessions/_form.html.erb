@@ -1,0 +1,16 @@
+<%= turbo_frame_tag :form do %>
+  <%= form_with model: @resource, local: true, url: no_password.session_path(return_to: @return_to), class: "space-y-6", html: {"data-turbo": false} do |form| %>
+    <p class="text-skin-muted px-4 text-center">
+        <%= t("no_password.sessions.new.description") %>
+    </p>
+    <div>
+      <label class="block text-sm font-medium text-skin-muted"><%= form.label :email %></label>
+      <div class="mt-1">
+        <%= form.text_field :email, maxlength: 60, required: true, class: "input w-full", type: "email", placeholder: t("form.placeholders.email") %>
+      </div>
+    </div>
+    <div>
+        <%= form.submit t("form.submit.login"), class: "w-full flex button button-accented" %>
+    </div>
+  <% end %>
+<% end %>

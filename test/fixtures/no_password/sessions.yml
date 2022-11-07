@@ -4,19 +4,19 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-session_one:
+session_unclaimed:
   token: "NnqE-5854-NUQC"
-  user_agent: "Chrome/95.0.4214.45"
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15"
   remote_addr: "95.0.4214.45"
-  expires_at: <%= Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration) %>
-  return_url: "http://www.example.com/home"
-  email: "test@example.com"
+  expires_at: <%= NoPassword.configuration.session_expiration.from_now %>
+  return_url: "/home"
+  email: "user1@example.com"
 
 session_claimed:
   token: "UA90-5854-OPQU"
-  user_agent: "Chrome/185.0.4214.45"
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15"
   remote_addr: "185.0.4214.45"
-  expires_at: <%= Time.zone.now.advance(minutes: NoPassword.configuration.session_expiration) %>
+  expires_at: <%= NoPassword.configuration.session_expiration.from_now %>
   claimed_at: <%= Time.zone.now %>
-  return_url: "http://www.example.com/home"
-  email: "test@example.com"
+  return_url: "/home"
+  email: "user2@example.com"

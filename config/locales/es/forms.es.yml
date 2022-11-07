@@ -1,9 +1,9 @@
 es:
   form:
     placeholders:
-      email: "ana@company.com"
+      email: "ana@mi-correo.com"
       token: "4646-39103-0867"
     labels:
       token: "Código"
     submit:
-      login: "Iniciar Sesión"
+      login: "Continuar"

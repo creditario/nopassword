@@ -2,7 +2,7 @@
 
 module NoPassword
   class SessionsMailer < ApplicationMailer
-    include Concerns::WebTokens
+    include NoPassword::WebTokens
 
     def send_token
       @session = params[:session]

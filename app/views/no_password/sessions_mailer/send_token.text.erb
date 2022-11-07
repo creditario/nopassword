@@ -6,7 +6,7 @@
 
 <%= @friendly_token %>
 
-<%= t("mailers.send_token.instructions_2") %>
+<%= t("mailers.send_token.instructions_2_text") %>
 <%= no_password.session_confirmation_url(token: @signed_token)%>
 
 <%= t("mailers.send_token.instructions_3") %>

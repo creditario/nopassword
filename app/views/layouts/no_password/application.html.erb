@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "no_password/tailwind", "inter-font", "data-turbo-track": "reload" %>
 
+    <%= stylesheet_link_tag "no_password/tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "no_password/application", media: "all", "data-turbo-track": "reload" %>
+
     <%= no_password_importmap_tags %>
   </head>
 
@@ -19,10 +20,7 @@
     </div>
 
     <section>
-      <div>
-        <%= yield %>
-      </div>
+      <%= yield %>
     </section>
-
   </body>
 </html>
