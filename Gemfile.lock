@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    no_password (0.2.0)
+    no_password_auth (0.2.0)
       importmap-rails (~> 1.1.0)
       rails (~> 7.0.0)
       sprockets-rails
@@ -233,7 +233,7 @@ DEPENDENCIES
   bundle-audit
   importmap-rails
   letter_opener
-  no_password!
+  no_password_auth!
   pg
   propshaft
   puma
