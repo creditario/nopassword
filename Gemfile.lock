@@ -198,13 +198,13 @@ GEM
     standard (1.16.1)
       rubocop (= 1.35.1)
       rubocop-performance (= 1.14.3)
-    stimulus-rails (1.1.0)
+    stimulus-rails (1.1.1)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.16-arm64-darwin)
+    tailwindcss-rails (2.0.19-arm64-darwin)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.16-x86_64-darwin)
+    tailwindcss-rails (2.0.19-x86_64-darwin)
       railties (>= 6.0.0)
-    tailwindcss-rails (2.0.16-x86_64-linux)
+    tailwindcss-rails (2.0.19-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.0)
@@ -218,7 +218,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   arm64-darwin-20
