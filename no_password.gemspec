@@ -1,7 +1,7 @@
 require_relative "lib/no_password/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "no_password"
+  spec.name = "no_password_auth"
   spec.version = NoPassword::VERSION
   spec.authors = ["Mario Alberto Chávez", "Armando Escalier", "Juan Bojorges"]
   spec.homepage = "https://aoorora.com"
