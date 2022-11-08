@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/creditario/nopassword"
   spec.metadata["changelog_uri"] = "https://github.com/creditario/nopassword"
 
-  spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "README-ES.md"]
+  spec.files = Dir["{app,config,db,lib,docs}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "README-ES.md"]
 
   spec.add_dependency "rails", "~> 7.0.0"
   spec.add_dependency "sprockets-rails"
