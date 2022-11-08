@@ -30,11 +30,11 @@ Customization for CSS and Javascript is possible; refer to [Views personalizatio
 
 Add NoPassword gem reference to your application's `Gemfile`.
 ```ruby
-gem "no_password_auth"
+gem "no_password_auth", require: "no_password"
 ```
 Or add gem reference from its Github repository.
 ```ruby
-gem "no_password_auth", git: "https://github.com/creditario/nopassword.git"
+gem "no_password_auth", git: "https://github.com/creditario/nopassword.git", require: "no_password"
 ```
 
 In any case, execute `bundle` to install the gem.

@@ -5,7 +5,7 @@ require "rails/all"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-# require "no_password"
+require "no_password"
 
 module Dummy
   class Application < Rails::Application

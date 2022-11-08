@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require "no_password"
+
 NoPassword.configuration.importmap.draw do
   # Stimulus & Turbo
   pin "@hotwired/turbo-rails", to: "turbo.min.js", preload: true

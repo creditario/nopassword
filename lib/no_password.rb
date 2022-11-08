@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "no_password/version"
 require "no_password/engine"
 require "no_password/railtie"

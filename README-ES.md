@@ -30,11 +30,11 @@ En caso de requieras personalizar la forma en como se sirven los assets, por eje
 
 Para instalar NoPassword solamente hay que añadir la gema a tu `Gemfile`.
 ```ruby
-gem "no_password_auth"
+gem "no_password_auth", require: "no_password"
 ```
 También puedes instalar la gema directamente desde el repositorio de github con:
 ```ruby
-gem "no_password_auth", git: "https://github.com/creditario/nopassword.git"
+gem "no_password_auth", git: "https://github.com/creditario/nopassword.git", require: "no_password"
 ```
 
 En ambos casos hay que ejecutar `bundle` para instalar la dependencia.

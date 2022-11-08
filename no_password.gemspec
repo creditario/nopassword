@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+$LOAD_PATH << File.expand_path("lib", __dir__)
 require_relative "lib/no_password/version"
 
 Gem::Specification.new do |spec|
@@ -20,7 +23,6 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,db,lib,docs}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "README-ES.md"]
 
   spec.add_dependency "rails", "~> 7.0.0"
-  spec.add_dependency "sprockets-rails"
   spec.add_dependency "turbo-rails", "~> 1.1.0"
   spec.add_dependency "stimulus-rails", "~> 1.1.0"
   spec.add_dependency "importmap-rails", "~> 1.1.0"
