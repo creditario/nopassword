@@ -39,7 +39,7 @@ gem "no_password", git: "https://github.com/creditario/nopassword.git"
 
 En ambos casos hay que ejecutar `bundle` para instalar la dependencia.
 
-El siguente paso consiste en instalar las migraciones y el archivo inicializardo de NoPassword.
+El siguente paso consiste en instalar las migraciones y el archivo inicializador de NoPassword.
 
 ```bash
 $ bin/rails no_password:install
@@ -57,7 +57,7 @@ Al instalar NoPassword automáticamente el Engine se monta en `/p` dentro del ar
 ### Configurar inicializador
 NoPassword provee un inicializador en `config/initializers/no_password.rb`. Aquí es posible cambiar el comportamiento de la expiración de la sesión después de haber iniciado, por omisión expira después de dos horas `session_expiration`. Otra opción disponible es indicar en cuanto tiempo expira un token que no ha sido reclamado, por omisión expira en 15 minutos `token_expiration`.
 
-`secret_key` permite crear la llave que firma las URLs de los links mágicos para iniciar sesión. Si el valor es nulo, entonces hace uso del `secret_key` de Ruby on Rails.
+`secret_key` permite configurar la llave que firma las URLs de los links mágicos para iniciar sesión. Si el valor es nulo, entonces hace uso del `secret_key` de Ruby on Rails.
 
 ```ruby
 NoPassword.configure do |config|
@@ -111,7 +111,7 @@ $ rails no_password:install:copy_templates
 ```
 
 ## Uso de NoPassword
-Después de instala NoPassword para utilizarla en tu aplicación se proporcionan filtros y **helpers** que te permiten conocer si existe una sesión activa o no, y en su defecto, enviar al usuario a crear una sesión antes de continuar.
+Después de instalar NoPassword para utilizarla en tu aplicación se proporcionan filtros y **helpers** que te permiten conocer si existe una sesión activa o no, y en su defecto, enviar al usuario a crear una sesión antes de continuar.
 
 ### Filtros de controlador
 El filtro `authenticate_session!` se incluye en el módulo `NoPassword::ControllerHelpers`. Este filtro es utilizado en un `before_action` para determinar en un controlador si existe una sesión activa o no. En el caso de no existir, el usuario es redirigido a la sección de NoPassword donde podrá solicitar un token de acceso.
@@ -175,6 +175,7 @@ end
 ## Generadores
 La gema NoPassword cuenta con 4 generadores de Ruby on Rails, el primero de ellos es el que se encarga de realizar la instalación y realiza las siguientes acciones.
 
+- Crea el archivo de inicialización
 - Monta el engine en las rutas de aplicación
 - Incluye los **helpers** de la gema en `ApplicationController`.
 - Copia las migraciones de NoPassword a la aplicación.

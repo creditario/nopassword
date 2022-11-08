@@ -5,8 +5,8 @@ Gem::Specification.new do |spec|
   spec.version = NoPassword::VERSION
   spec.authors = ["Mario Alberto Chávez", "Armando Escalier", "Juan Bojorges"]
   spec.homepage = "https://aoorora.com"
-  spec.summary = "Summary of NoPassword."
-  spec.description = "Description of NoPassword."
+  spec.summary = "Passwordless Ruby on Rails engine."
+  spec.description = "NoPassword is a Ruby on Rails gem that allows session authentication with a token or a magic link via an email sent to the user; there is no need for a password."
   spec.license = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

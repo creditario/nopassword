@@ -1,162 +1,130 @@
 # NoPassword
 
-NoPassword permite realizar autenticación de sesiones con un token o un link mágico enviado a tu email, sin necesidad de contraseñas.
+NoPassword is a Ruby on Rails gem that allows session authentication with a token or a magic link via an email sent to the user; there is no need for a password.
 
-## Tabla de contenido
+## Table of contents
 
-- [Requerimientos previos](#requerimientos-previos)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-    - [Configurar idiomas](#configurar-idiomas)
-    - [Configuración para emails](#configuración-para-emails)
-      - [Uso de letter opener](#uso-de-letter-opener)
-    - [Personalización de vistas](#personalización-de-vistas)
-    - [Reconstruir el build de Tailwind](#reconstruir-el-build-de-tailwind)
-- [Uso](#uso)
-  - [Filtros de controlador y helpers](#filtros-de-controlador-y-helpers)
+- [Requirements](#requirements)
+- [Installation](#instalation)
+- [Configuration](#configuration)
+    - [Initializer](#initializer)
+    - [Locales](#locales)
+    - [Email configuration](#email-configuration)
+    - [Custom views](#custom-views)
+- [Usage](#usage)
+  - [Action filter](#action-filter)
   - [Helper methods](#helper-methods)
-  - [Callbacks](#callbacks)
-  - [Rutas](#rutas)
-- [Generadores disponibles](#generadores-disponibles)
-- [Instalación de requerimientos](#instalación-de-requerimientos)
-    - [TailwindCSS](#tailwindcss)
-    - [Stimulus](#stimulus)
-- [Licencia](#licencia)
+  - [Callback](#callback)
+- [Generators](#generator)
+- [Develooment and tests](#development-and-tests)
+- [License](#license)
 
-## Requerimientos previos
+## Requirements
 
-Es necesario tener instalado lo siguiente:
+NoPassword is a Rails Engine that needs Ruby on Rails 7.0 or better and Ruby 3.0.2 o better.
+NoPassword flow is composed of two views for the user to enter an email, and the received token. The engine uses TailwindCSS via [tailwindcss-rails](https://github.com/rails/tailwindcss-rails) and StimulusJS served with the browser's Importmaps.
 
- - TailwindCSS (vía Webpack, Bundling, PostCSS o la gema de Rails).
- - Stimulus (vía Webpack, Bundling o Importmaps.)
+Customization for CSS and Javascript is possible; refer to [Views personalization](#views-personalization) to learn how to extract gem templates.
 
+## Installation
 
-Para el correcto funcionamiento de NoPassword además es requerido instalar la gema [tailwindcss-rails](https://github.com/rails/tailwindcss-rails).
-
-En caso de no contar con ellos, puedes ver un ejemplo de la instalación de dichos requerimientos en [Instalación de requerimientos](#instalación-de-requerimientos).
-
-## Instalación
-
-NoPassword es un engine de Rails. Probado con Rails `>= 7.0.1` y Ruby `>= 3.0.2`
-
-Añade la siguiente línea a tu Gemfile:
+Add NoPassword gem reference to your application's `Gemfile`.
 ```ruby
 gem "no_password"
 ```
-o bien puedes instalar la gema directamente desde el repositorio de github con:
+Or add gem reference from its Github repository.
 ```ruby
-gem "no_password", git: "https://github.com/creditario/no_password.git"
+gem "no_password", git: "https://github.com/creditario/nopassword.git"
 ```
 
-Después ejecuta `bundle`.
-
-Usa el siguiente comando para instalar y configurar el engine en tu aplicación:
+In any case, execute `bundle` to install the gem.
+Next, use the gem installer to install migrations and the gem initializer.
 
 ```bash
-$ rails no_password:install
+$ bin/rails no_password:install
 ```
-
-Ejecuta las migraciones:
+Don't forget to execute database migration after this step.
 ```bash
 $ bin/rails db:migrate
 ```
 
-## Configuración
+The following section explains configuration options for the NoPassword gem with its initializer file.
 
-NoPassword te redirige por default al `root_path` de tu aplicación cuando inicias y cierras sesión. Debido a esto es necesario que configures tu `root_path` en `config/routes.rb`.
+## Configuration
+After installing the NoPassword gem, the engine is mounted at the `/p` path inside the `config/routes.rb` file.
 
-Este es un ejemplo:
-```bash
-  root to: "home#index"
+### Initializer
+After installing the NoPassword gem, the engine is mounted at the `/p` path inside the `config/routes.rb` file.
+
+NoPassword initializer is located at `config/initializers/no_password.rb`. The gem provides three configuration options. Session expiration by default is set to two hours after a new session is started. To adjust this time, use `session_expiration` attribute to set a new value.
+Token expiration is set by default to 15 minutes. Update `token_expiration` increase or decrease this time.
+
+`secret_key` is the key used to sign magic links URLs; if this value is `nil`, then Ruby on Rails  `secret_key` is used for this cryptographic task.
+
+```ruby
+NoPassword.configure do |config|
+  # Session expiration time
+  # config.session_expiration = 2.hours
+  #
+  # Token expiration time
+  # config.token_expiration = 15.minutes
+  #
+  # Secret key to cypher tokens, if none, then Rails secret key is used
+  # config.secret_key = nil
+end
 ```
 
-### Configurar idiomas
-NoPassword funciona en español (`:es`) y en inglés (`:en`), es necesario que en `config/application.rb` tengas habilitado alguno de los dos idiomas por default, utiliza las siguientes líneas:
-```bash
+### Locales
+NoPassword gem includes locales for Spanish and English languages. Set your language configuration at the main application `config/application.rb`.
+
+```ruby
 config.i18n.default_locale = :es
 config.i18n.available_locales = [:en, :es]
 ```
 
-### Configuración para emails
-Para el correcto funcionamiento de los assets dentro de los emails es necesario establecer `asset_host` para action_mailer.
+### Email configuration
+NoPassword uses ActionMailer to email the user its token and magic link. If a background strategy is setup for ActiveJob, like [Sidekiq](https://sidekiq.org) then emails are sent in the background.
 
-También asegurate de tener declarado un host para `default_url_options` en tus archivos de `config/enviroments`(`development.rb`, `production.rb` y `test.rb`).
+Remember to configure `default_url_options` and `asset_host` inside `config/enviroments/production.rb` file.
 
-Aquí tienes un ejemplo de como declarar ambas configuraciones para el environment de `development.rb`:
-```bash
-config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-config.action_mailer.asset_host = "http://localhost:3000"
+```ruby
+config.action_mailer.default_url_options = { host: "my-domain.com" }
+config.action_mailer.asset_host = "https://my-domain.com"
 ```
 
-### Uso de letter opener
+In development mode, having a tool like [letter opener](https://github.com/ryanb/letter_opener) helps to open emails inline, preventing sending emails. Add letter opener gem reference to your `Gemfile` and run `bundle` to install it.
 
-Es recomendado utilizar la gema [letter opener](https://github.com/ryanb/letter_opener) para poder tener acceso a los emails cuando se hacen pruebas en ambiente de desarrollo.
-
-Añade la siguiente línea a tu Gemfile:
-```bash
+```ruby
 gem "letter_opener", group: :development
 ```
 
-Utiliza `bundle` para instalar la gema letter_opener.
+Configure the letter opener by opening `config/enviroments/development.rb` and adding the following configuration.
 
-Asegurate de tener declarado `:letter_opener` como `delivery_method` y `perform_deliveries` igual a `true`, en `config/enviroments/development.rb`:
-```bash
+```ruby
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
 ```
 
-### Personalización de vistas
-
-Este paso no es necesario, con los pasos anteriores se obtienen las vistas default de la gema, pero si así lo requieres puedes personalizar las vistas de la gema, utiliza este comando que copia las vistas del engine dentro de tu aplicación. Los archivos se generan dentro de `views/no_password` y `views/layouts/no_password`.
+### Custom views
+This step is necessary only if you plan to customize the views provided by NoPassword. The following generator copies all engine views into `views/no_password` and `views/layouts/no_password`.
 
 ```bash
 $ rails no_password:install:copy_templates
 ```
 
-### Reconstruir el build de Tailwind
+## Usage
+After installing NoPassword, you can use the filters and **helpers** provided by the gem to query if there is an active session or to send the user to the sign in process.
 
-En caso de estar desarrollando el proyecto entre varias personas puede que sea necesario volver a generar el build de TailwindCSS al probar el proyecto en local, esto debido a que el archivo `tailwind.config.js` puede contener paths en su sección `content` que no corresponden a tus archivos locales causando errores, para hacerlo utiliza el siguiente comando:
-```bash
-$ rails no_password:tailwindcss:build
-```
+### Action filter
+The filter `authenticate_session!` is defined when the module `NoPassword::ControllerHelpers` is included in a controller. This filter is used with a `before_action` to secure a controller or controller action. When a user reaches a controller protected by this filter, and there is no active session, the user is redirected to the sign-in process.
 
-## Uso
-
-El inicio de sesión puede hacerse por medio de un link mágico presente en el email o mediante el token adjunto, ingresándolo en el formulario de la ruta: `/p/confirmations`.
-
-Ambos métodos redireccionan al `root_path` default de tu aplicación.
-
-### Filtros de controlador y helpers
-
-NoPassword incluye algunos helpers, disponibles para su uso en tus controladores y vistas.
-
-Durante la instalación de la gema se añade de forma automatica un `include` en el `ApplicationController` de tu aplicación, esto permite hacer uso de helpers y filtros, asegúrate de que dicha linea este presente o agrégala manualmente en caso de que no sea así:
-```bash
-  include NoPassword::Concerns::ControllerHelpers
-```
-
-Para añadir la autenticación a una acción en un controlador, solamente necesitas usar este `before_action`:
-
-```bash
-  before_action :authenticate_session!, only: [:show]
+```ruby
+  include NoPassword::ControllerHelpers
+  before_action :authenticate_session!
 ```
 
 ### Helper methods
-
-Puedes usar `signed_in_session?` y `current_session` en tus controladores, vistas y helpers.
-
-Usa el siguiente helper para verificar si hay una sesión iniciada:
-
-```bash
-  signed_in_session?
-```
-
-Con este helper puedes obtener la sesión actual y su información:
-```bash
-  current_session
-```
-
-Este es un ejemplo de como se usan en las vistas:
+The module `NoPassword::ControllerHelpers` includes methods `signed_in_session?` and `current_session` to query if there is an active session or to get more information about an active session. These methods are also exposed as helpers in the Rails view context.
 
 ```erb
 <% if signed_in_session? %>
@@ -167,131 +135,96 @@ Este es un ejemplo de como se usan en las vistas:
 <% end %>
 ```
 
-Al finalizar la instalación y configuración de la gema puedes probar tu aplicación con el comando `./bin/dev`
-```bash
-$ ./bin/dev
-```
+### Callback
+NoPassword sign in flow has two pages; the first one receives the user email, creates a token and a magic link, and then sends it via email. The second page accepts the token and decides whether the user can have a session.
+However, an application may require a different flow, which is why the callback `after_sign_in!` exists.
 
-### Callbacks
+This is an example of a custom flow that mimics a Single Page flow.
 
-Si requieres tener más control sobre lo que pasa después de hacer login, tienes disponible el siguiente callback:
+![Aoorora Demo page](docs/aoorora-demo.gif)
+
+The callback is called on every intent to start a session, whether the sign was successful or not.
 ```ruby
-after_sign_in!(signed_in, by_url)
+after_sign_in!(signed_in, by_url, return_url)
 ```
-#### Parámetros
+It receives three parameters.
+- `signed_in`: A boolean value that indicates if the user succeeded in getting a session.
+- `by_url`: A boolean value that indicates if the login happens with the magic link or entered token manually.
+- `return_url`: A string value with the return path if the user succeeded in getting a session.
 
-El callback tiene dos parámetros que funcionan de la siguiente manera:
+The `SessionConfirmationsController` controller expects any of the following possible values from the callback.
+- `nil`: indicates callback was executed but is returning flow control to the controller.
+- `render` o `redirect_to`: indicates callback was executed and is taking over sign in flow.
 
-El valor de `signed_in` es `true` cuando la sesión se inicia exitosamente y su valor es `false` cuando no.
-
-El valor de `by_url` es `true` cuando intentas iniciar sesión por medio del link y su valor es `false` cuando ingresas el token manualmente en el formulario.
-
-#### Ejemplo
-
-Para implementarlo, añade el método `after_sign_in!` dentro del controlador `session_confirmations_controller.rb` mediante un `class.eval`.
-
-Un ejemplo de cómo utilizar el callback:
+`after_sign_in!` callback is implemented by creating a `app/controllers/no_password/session_confirmations_controller.rb`  file in your application. The original controller from NoPassword engine is loaded, and then the callback is added with a `class_eval`.
 
 ```ruby
 load NoPassword::Engine.root.join("app", "controllers", "no_password", "session_confirmations_controller.rb")
 
 NoPassword::SessionConfirmationsController.class_eval do
-  private
-
   def after_sign_in!(signed_in, by_url)
-    return example_method if signed_in
-    return nil unless by_url
+    return do_something_different if signed_in # Do something different if user signed in successfully
+    return nil if !by_url # Return control if failed to sign in with magic link
 
-    flash[:alert] = "No es posible iniciar sesión"
-    redirect_to main_app.example_path
+    flash[:alert] = "Your code is not valid"
+    redirect_to main_app.demo_path # Redirect somewhere else if token is invalid
   end
-
-  ...
 end
 ```
 
-### Rutas
+## Generators
+NoPassword gem has four Ruby on Rails generators. The first one is the installer which performs the following actions.
 
-La ruta por default de la gema es `/p`.
-
-NoPassword tiene tres rutas principales:
-
-Para iniciar sesión, el path `no_password.new_session_path` muestra la vista para introducir un email, al que será enviado un token único y expirable:
-
-```bash
-   <%= no_password.new_session_path %> # => /p/sessions/new #
-```
-
-Para ingresar el token, el path `no_password.edit_session_confirmations_path` muestra la vista con el formulario:
-
-```bash
-   <%= no_password.edit_session_confirmations_path %> # => /p/confirmations #
-```
-
-Para cerrar sesión es necesario enviar `current_session.id` al path `no_password.session_path` con el método `delete`:
-```bash
-   <%= button_to "Sign out", no_password.session_path(current_session.id), method: :delete %>
-```
-
-## Generadores disponibles
-
-### Instala el engine NoPassword.
+- Creates the gem initializer.
+- Mount the engine in the routes file.
+- Adds the gem Helpers into `ApplicationController`.
+- Copy NoPassword migrations to the application.
+- Generates the Tailwind config file and generates de CSS for NoPassword.
 
 ```bash
 $ rails no_password:install
 ```
-- Agrega la ruta para montar el engine.
-- Agrega los concerns al ApplicationController.
-- Copia las migraciones del engine.
-- Genera el archivo de CSS de Tailwind.
-
-### Copia los templates de no_password a tu aplicación.
+`copy_templates` generator copies gem templates to the application to allow views customization. Files are copied to `app/views` inside a `no_password` folder.
 
 ```bash
 $ rails no_password:install:copy_templates
 ```
-- Copia los templates de layouts, vistas y mailers a la
-aplicación principal para permitir la personalización.
 
-### Copia migraciones de no_password a tu aplicación.
+`migrations` generator copies the gem migrations to the application.
 
 ```bash
 $ rails no_password:install:migrations
 ```
-### Genera tu Tailwind CSS.
 
+`tailwindcss::build` and `tailwindcss:watch` generators work together to generate de Tailwind CSS for gem views. Both generate a `tailwind.config.js` file that needs to be added to `.gitignore` file.
 ```bash
 $ rails no_password:tailwindcss:build
 ```
-- Se genera localmente al momento de instalar y se
-puede regenerar en cualquier momento.
-- Se integra al proceso de compilación de assets en
-producción.
-
-###  Autogenera el CSS.
+`tailwindcss::build` generator connects automatically to the assets compilation process in production to generate the Tailwind CSS for the gem.
 
 ```bash
 $ rails no_password:tailwindcss:watch
 ```
-- En modo de desarrollo de la gema se autogenera el CSS.
+`tailwindcss:watch` generator is used in development to generate the Tailwind CSS for the gem. Add it to `Procfile.dev` file to ensure that CSS is generated in development when using Foreman or Overmind.
 
-## Instalación de requerimientos
-
-### TailwindCSS
-En caso de que tu aplicación no cuente con TailwindCSS, te recomendamos instalar la gema de [tailwindcss-rails](https://github.com/rails/tailwindcss-rails) en tu aplicación.
-
-Corre los siguientes comandos para instalarlo.
-```bash
-$ ./bin/bundle add tailwindcss-rails
+```ruby
+no_password_css: bin/rails app:no_password:tailwindcss:watch
 ```
+
+## Development and tests
+A development environment for this gem is easy to create, clone the repository and run the script `bin/setup` to install dependencies and prepare a database (Postgresql). The script assumes that you have [Overmind](https://github.com/DarthSim/overmind) installed, which used the `Procfile.dev` to start the sample application on port 3090.
+
 ```bash
-$ ./bin/rails tailwindcss:install
+$ bin/setup
 ```
-### Stimulus
 
-Si tu aplicación usa una versión de Rails 7 o mayor, Stimulus está automáticamente configurado en tu aplicación. En caso de no contar con Stimulus, te recomendamos instalar la gema [stimulus-rails](https://github.com/hotwired/stimulus-rails).
+![Aoorora Demo page](docs/dummy-app.png)
 
-Una vez finalizada la instalación de los requerimientos continua con la [instalación de la gema](#instalación) .
+To execute the gem tests, use the script `bin/ci`, which also runs the linters.
 
-## Licencia
+```bash
+$ bin/ci
+```
+
+## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
