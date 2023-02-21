@@ -12,10 +12,10 @@ en:
     default_from: no-reply@aoorora.com
 
     send_token:
-      subject: Here is your temporary login token
+      subject: "Aoorora: Your temporary session code is here"
       greetings: Hello!
-      instructions_1: You requested a login token to start a new session. Here is your code. You can copy/paste the code into our website. Please don't share this code to anyone.
-      instructions_2: Or use this button to start a new session. It will open a new browser window.
+      instructions_1: You are receiving this email because you requested a login code to begin a demo session in Aoorora. Please don't share this code with anyone else.
+      instructions_2: Click this button to start a new session. It will open a new browser window.
       instructions_2_text: Or use the follwing link to start a new session. Copy and paste it your browser.
       start_session: Continue to your session
       instructions_3: If you did not request this email, please ignore and delete it. Do not resend or share it with other people.
