@@ -36,7 +36,7 @@ module NoPassword
       referrer = CGI.unescape(return_to)
       return nil if referrer.blank?
 
-      referrer.include?(no_password.new_session_path) || referrer.include?(no_password.edit_session_confirmations_path) ? nil : referrer
+      (referrer.include?(no_password.new_session_path) || referrer.include?(no_password.edit_session_confirmations_path)) ? nil : referrer
     end
 
     def sign_out(key = nil)

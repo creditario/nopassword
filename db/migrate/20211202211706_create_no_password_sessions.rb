@@ -1,7 +1,6 @@
 class CreateNoPasswordSessions < ActiveRecord::Migration[7.0]
   def change
     create_table :no_password_sessions, if_not_exists: true do |t|
-
       t.timestamp :expires_at
       t.timestamp :claimed_at
       t.string :token, null: false

@@ -6,16 +6,18 @@ module NoPassword
     include NoPassword::WebTokens
 
     def edit
-      if params[:token].present?
-        token = verify_token(params[:token])
+      return unless params[:token].present?
 
-        sign_in_session(token, true)
-      end
+      token = verify_token(params[:token])
+      redirect_url = sign_in_session(token, by_url: true)
+
+      return redirect_to(redirect_url) if redirect_url.present?
     end
 
     def update
-      result = sign_in_session(params[:token])
-      return result if result.present?
+      redirect_url = sign_in_session(params[:token])
+
+      return redirect_to(redirect_url) if redirect_url.present?
 
       response.status = :unprocessable_entity
       render turbo_stream: turbo_stream.update("notifications", partial: "notification")
@@ -23,19 +25,25 @@ module NoPassword
 
     private
 
-    def sign_in_session(token, by_url = false)
+    def claim_session(token)
       current_session = SessionManager.new.claim(token)
-
-      flash.now.alert = t("flash.update.invalid_code.alert") if current_session.blank?
-
-      result = if respond_to?(:after_sign_in!)
-        after_sign_in!(current_session.present?, by_url, current_session&.return_url)
-      elsif current_session.present?
+      if current_session.present?
         save_session_to_cookie(current_session)
-        redirect_to(current_session.return_url || main_app.root_path)
+      else
+        flash.now.alert = t("flash.update.invalid_code.alert")
       end
 
-      result if result.present?
+      current_session
+    end
+
+    def sign_in_session(token, by_url: false)
+      current_session = claim_session(token)
+
+      if respond_to?(:after_sign_in!)
+        after_sign_in!(current_session, by_url)
+      elsif current_session.present?
+        (current_session.return_url || main_app.root_path)
+      end
     end
 
     def save_session_to_cookie(current_session, key = nil, data = nil)

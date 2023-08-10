@@ -4,7 +4,7 @@ es:
       invalid_code:
         alert:
           title: Código inválido
-          description: Revise su código no es válido o ya expiró. Puede solicitar uno nuevo.
+          description: Revise su código, es válido o ya expiró. Puede solicitar uno nuevo.
       session:
         alert:
           title: No existe sesión activa

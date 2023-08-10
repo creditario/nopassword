@@ -3,9 +3,9 @@
 require "test_helper"
 
 class CustomSessionConfirmationsController < NoPassword::SessionConfirmationsController
-  def after_sign_in!(signed_in, by_url, return_url)
+  def after_sign_in!(current_session, by_url)
     # Do something else
-    redirect_to main_app.root_path
+    main_app.root_path
   end
 end
 
