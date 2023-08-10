@@ -45,7 +45,7 @@ jobs:
         run: bundle exec standardrb app/**/*.rb lib/**/*.rb
 
       - name: Brakeman
-        run: bundle exec brakeman --no-summary
+        run: bundle exec brakeman -A -7 --no-summary
 
       - name: Bundle audit update
         run: bundle exec bundle-audit update
