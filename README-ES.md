@@ -144,16 +144,15 @@ El flujo normal para iniciar sesión consta de dos pasos, una página donde se i
 
 Este callback va a ser llamado en cada intento de iniciar sesión, ya sea con código o con link mágico, independientemente de si el inicio de sesión es exitoso o no.
 ```ruby
-after_sign_in!(signed_in, by_url, return_url)
+after_sign_in!(current_session, by_url)
 ```
-El callback recibe 3 parámetros.
-- `signed_in`: indica si fue exitoso el inicio de sesión o no, su valor es booleano.
+El callback recibe dos parámetros.
+- `current_session`: El objecto que representa a la sesión activa.
 - `by_url`: indica como se inentó iniciar sesión, ya sea por el link mágico o con el código introducido manualmente, su valor es booleano.
-- `return_url`: Contiene la URL a donde redireccionar al usuario en caso de que el inicio de sesión sea exitoso, su valor es una cadena de texto.
 
 El controlador `SessionConfirmationsController` espera como respuesta del callback los siguientes posibles valores:
 - `nil`: con el cual se indica que se ejecutó el callback y que regresa el control del flujo al controlador.
-- `render` o `redirect_to`: en este caso le indicamos al controlador que el callback toma el control del flujo.
+- `redirect path`: es una ruta en forma de string que indica que el callback se ejecutó y espera una redirección a esa ruta específica.
 
 Podemos implementar el callback `after_sign_in!` creando el archivo `app/controllers/no_password/session_confirmations_controller.rb` en nuestra aplicación principal,
 donde cargamos el controlador original desde el engine de NoPassword y con `class_eval` le inyectamos el método.
@@ -162,12 +161,12 @@ donde cargamos el controlador original desde el engine de NoPassword y con `clas
 load NoPassword::Engine.root.join("app", "controllers", "no_password", "session_confirmations_controller.rb")
 
 NoPassword::SessionConfirmationsController.class_eval do
-  def after_sign_in!(signed_in, by_url)
+  def after_sign_in!(current_session, by_url)
     return do_something_different if signed_in # Do something different if user signed in successfully
     return nil if !by_url # Return control if failed to sign in with magic link
 
     flash[:alert] = "Your code is not valid"
-    redirect_to main_app.demo_path # Redirect somewhere else if token is invalid
+    main_app.demo_path # Redirect somewhere else if token is invalid
   end
 end
 ```

@@ -145,16 +145,15 @@ This is an example of a custom flow that mimics a Single Page flow.
 
 The callback is called on every intent to start a session, whether the sign was successful or not.
 ```ruby
-after_sign_in!(signed_in, by_url, return_url)
+after_sign_in!(current_session, by_url)
 ```
-It receives three parameters.
-- `signed_in`: A boolean value that indicates if the user succeeded in getting a session.
+It receives two parameters.
+- `current_session`: An object that represents the active session.
 - `by_url`: A boolean value that indicates if the login happens with the magic link or entered token manually.
-- `return_url`: A string value with the return path if the user succeeded in getting a session.
 
 The `SessionConfirmationsController` controller expects any of the following possible values from the callback.
 - `nil`: indicates callback was executed but is returning flow control to the controller.
-- `render` o `redirect_to`: indicates callback was executed and is taking over sign in flow.
+- `redirect path`: it is a string path that indicates callback was executed and want to redirect to specific path.
 
 `after_sign_in!` callback is implemented by creating a `app/controllers/no_password/session_confirmations_controller.rb`  file in your application. The original controller from NoPassword engine is loaded, and then the callback is added with a `class_eval`.
 
@@ -162,12 +161,12 @@ The `SessionConfirmationsController` controller expects any of the following pos
 load NoPassword::Engine.root.join("app", "controllers", "no_password", "session_confirmations_controller.rb")
 
 NoPassword::SessionConfirmationsController.class_eval do
-  def after_sign_in!(signed_in, by_url)
+  def after_sign_in!(current_session, by_url)
     return do_something_different if signed_in # Do something different if user signed in successfully
     return nil if !by_url # Return control if failed to sign in with magic link
 
     flash[:alert] = "Your code is not valid"
-    redirect_to main_app.demo_path # Redirect somewhere else if token is invalid
+    main_app.demo_path # Redirect somewhere else if token is invalid
   end
 end
 ```

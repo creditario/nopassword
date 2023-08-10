@@ -1,0 +1,52 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "310eb4d856343cbe3a4b5357ce331265a65360c7c51cef559f077eaa96015e95",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/no_password/session_confirmations_controller.rb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(sign_in_session(verify_token(params[:token]), :by_url => true))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "NoPassword::SessionConfirmationsController",
+        "method": "edit"
+      },
+      "user_input": "params[:token]",
+      "confidence": "Weak",
+      "cwe_id": [
+        601
+      ],
+      "note": "It is ok,redirect is calculated."
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "6a097716f95b29bd0948be5684aa38582be64c76f258032743ff949a8abdc064",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/no_password/session_confirmations_controller.rb",
+      "line": 20,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(sign_in_session(params[:token]))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "NoPassword::SessionConfirmationsController",
+        "method": "update"
+      },
+      "user_input": "params[:token]",
+      "confidence": "Weak",
+      "cwe_id": [
+        601
+      ],
+      "note": "It is ok, redirect is calculated."
+    }
+  ],
+  "updated": "2023-08-10 11:37:09 -0600",
+  "brakeman_version": "6.0.1"
+}

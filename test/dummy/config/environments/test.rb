@@ -59,5 +59,5 @@ Rails.application.configure do
 
   # Default host
   config.default_url_options = {host: "localhost:3090"}
-  config.action_mailer.default_url_options = { host: "localhost", port: 3090 }
+  config.action_mailer.default_url_options = {host: "localhost", port: 3090}
 end
