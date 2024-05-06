@@ -11,6 +11,7 @@ ignore: # default: []
   - "bin/**/*"
   - "Gemfile"
   - "config/environments/**/*"
+  - "test/dummy/config/environments/**/*"
   - "config/application.rb"
   - "config/boot.rb"
   - "config/puma.rb"
