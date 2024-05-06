@@ -3,7 +3,7 @@ name: "CI"
 on: [push, pull_request]
 
 env:
-  RUBY_VERSION: 3.0.2
+  RUBY_VERSION: 3.3.0
 
 jobs:
   linter:
@@ -86,7 +86,7 @@ jobs:
 
       - uses: actions/cache@v2
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-module-
