@@ -70,10 +70,6 @@ jobs:
         run: |
           sudo apt-get -yqq install sqlite3
 
-      - name: Prepare database
-        run: |
-          cd  test/dummy && bin/rails db:prepare db:migrate
-
       - name: Precompile assets
         run: |
           cd  test/dummy && bin/rails assets:precompile
@@ -84,4 +80,4 @@ jobs:
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          bin/rails app:db:reset test
+          bin/rails app:db:prepare app:db:reset app:db:migrate test
