@@ -80,4 +80,4 @@ jobs:
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          bin/rails app:db:prepare app:db:reset app:db:migrate test
+          bin/rails db:migrate
