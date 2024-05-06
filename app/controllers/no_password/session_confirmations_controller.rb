@@ -11,7 +11,7 @@ module NoPassword
       token = verify_token(params[:token])
       redirect_url = sign_in_session(token, by_url: true)
 
-      return redirect_to(redirect_url) if redirect_url.present?
+      redirect_to(redirect_url) if redirect_url.present?
     end
 
     def update
@@ -42,7 +42,7 @@ module NoPassword
       if respond_to?(:after_sign_in!)
         after_sign_in!(current_session, by_url)
       elsif current_session.present?
-        (current_session.return_url || main_app.root_path)
+        current_session.return_url || main_app.root_path
       end
     end
 

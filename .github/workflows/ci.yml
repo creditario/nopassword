@@ -3,7 +3,7 @@ name: "CI"
 on: [push, pull_request]
 
 env:
-  RUBY_VERSION: 3.0.2
+  RUBY_VERSION: 3.3.0
 
 jobs:
   linter:
@@ -57,20 +57,6 @@ jobs:
     name: Test
     needs: linter
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13-alpine3.14
-        env:
-          POSTGRES_DB: nopassword_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby
@@ -80,20 +66,9 @@ jobs:
           bundler-cache: true
           cache-version: 1
 
-      - name: Setup PostgresSQL
+      - name: Setup SQLite3
         run: |
-          sudo apt-get -yqq install libpq-dev
-
-      - uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-module-
-
-      - name: Yarn install
-        run: |
-          cd test/dummy & yarn install
+          sudo apt-get -yqq install sqlite3
 
       - name: Precompile assets
         run: |
@@ -101,9 +76,8 @@ jobs:
 
       - name: Run all tests
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/nopassword_test
           RAILS_ENV: test
           RACK_ENV: test
           DISABLE_SPRING: true
         run: |
-          bin/rails app:db:reset test
+          bin/rails app:db:migrate
