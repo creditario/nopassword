@@ -72,7 +72,7 @@ jobs:
 
       - name: Prepare database
         run: |
-          cd  test/dummy && bin/rails db:prepare
+          cd  test/dummy && bin/rails db:prepare db:migrate
 
       - name: Precompile assets
         run: |
