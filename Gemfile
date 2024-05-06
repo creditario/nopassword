@@ -6,7 +6,7 @@ gemspec
 
 # To use puma
 gem "puma"
-gem "pg"
+gem "sqlite3", "~> 1.4" # "~> 2.0", ">= 2.0.1"
 gem "propshaft"
 gem "turbo-rails"
 gem "tailwindcss-rails"

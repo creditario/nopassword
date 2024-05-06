@@ -140,7 +140,6 @@ GEM
     parser (3.3.1.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.6)
     propshaft (0.8.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -202,6 +201,9 @@ GEM
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.30.0, < 2.0)
     ruby-progressbar (1.13.0)
+    sqlite3 (1.7.3-arm64-darwin)
+    sqlite3 (1.7.3-x86_64-darwin)
+    sqlite3 (1.7.3-x86_64-linux)
     standard (1.35.1)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -251,9 +253,9 @@ DEPENDENCIES
   importmap-rails
   letter_opener
   no_password_auth!
-  pg
   propshaft
   puma
+  sqlite3 (~> 1.4)
   standard
   stimulus-rails
   tailwindcss-rails
