@@ -66,9 +66,20 @@ jobs:
           bundler-cache: true
           cache-version: 1
 
-      - name: Setup SQLite3
+      - name: Setup PostgresSQL
         run: |
           sudo apt-get -yqq install sqlite3
+
+      - uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-module-
+
+      - name: Prepare database
+        run: |
+          cd  test/dummy && bin/rails db:prepare
 
       - name: Precompile assets
         run: |
@@ -76,6 +87,7 @@ jobs:
 
       - name: Run all tests
         env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/nopassword_test
           RAILS_ENV: test
           RACK_ENV: test
           DISABLE_SPRING: true
