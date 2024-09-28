@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_25_215037) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[8.0].define(version: 2022_01_25_215037) do
   create_table "no_password_sessions", force: :cascade do |t|
     t.datetime "expires_at"
     t.datetime "claimed_at"
