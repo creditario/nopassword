@@ -1,4 +1,5 @@
 require "tailwindcss-rails"
+require "rails/generators"
 
 NO_PASSWORD_TAILWIND_COMPILE_COMMAND = "#{Tailwindcss::Engine.root.join("exe/tailwindcss")} -i #{NoPassword::Engine.root.join("app/assets/stylesheets/no_password/application.tailwind.css")} -o #{Rails.root.join("app/assets/builds", "no_password/tailwind.css")} -c #{Rails.root.join("app/assets/config/no_password/tailwind.config.js")}"
 
