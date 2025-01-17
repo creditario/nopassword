@@ -13,8 +13,8 @@ Dir[File.join(__dir__, "support", "*.rb")].sort.each { |file| require_relative f
 
 # Load fixtures from the engine
 if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
-  ActiveSupport::TestCase.fixture_paths << File.expand_path("fixtures", __dir__)
+  ActiveSupport::TestCase.fixture_paths = [File.expand_path("fixtures", __dir__)]
   ActionDispatch::IntegrationTest.fixture_paths = ActiveSupport::TestCase.fixture_paths
-  ActiveSupport::TestCase.file_fixture_path = ActiveSupport::TestCase.fixture_paths[0] + "/files"
+  ActiveSupport::TestCase.file_fixture_path = File.expand_path("fixtures", __dir__) + "/files"
   ActiveSupport::TestCase.fixtures :all
 end
